@@ -1,17 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
+// Import the original IZU Paros HTML as a raw string at build time.
+// This works in the Worker runtime (no filesystem access needed).
+// Edit the design in src/legacy/index.html.
+import legacyHtml from "../legacy/index.html?raw";
 
-// Homepage = the original IZU Paros HTML, served verbatim.
-// Read from disk on the server instead of self-fetching (self-fetch fails in dev).
-// Edit the design in public/legacy/index.html.
 export const Route = createFileRoute("/")({
   server: {
     handlers: {
       GET: async () => {
-        const filePath = path.join(process.cwd(), "public", "legacy", "index.html");
-        const html = await readFile(filePath, "utf-8");
-        return new Response(html, {
+        return new Response(legacyHtml, {
           status: 200,
           headers: { "Content-Type": "text/html; charset=utf-8" },
         });
