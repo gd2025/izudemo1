@@ -101,7 +101,7 @@ function HomePage() {
             move with the sea breeze.
           </p>
           <div className="izu-hero-cta" style={{ animationDelay: "1.15s" }}>
-            <Link to="/shop" search={{ category: undefined }} className="btn-brand izu-btn-primary">
+            <Link to="/shop" search={(prev) => prev} className="btn-brand izu-btn-primary">
               Shop the Collection
             </Link>
             <Link to="/our-story" className="btn-outline izu-btn-ghost">
@@ -166,7 +166,7 @@ function HomePage() {
         </div>
 
         <div className="izu-section-foot">
-          <Link to="/shop" search={{ category: undefined }} className="btn-outline izu-btn-ghost">
+          <Link to="/shop" search={(prev) => prev} className="btn-outline izu-btn-ghost">
             View All Pieces
           </Link>
         </div>
