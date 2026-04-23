@@ -358,6 +358,11 @@ const pageStyles = `
 .izu-trust-item:last-child{border-right:none}
 .izu-trust-title{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dk);font-weight:400}
 .izu-trust-sub{font-size:.7rem;color:var(--lt);margin-top:.2rem}
+/* Top strip variant — slimmer, sits above hero */
+.izu-trust-top{background:var(--white);border-top:.5px solid var(--parch)}
+.izu-trust-top .izu-trust-item{padding:.95rem 1rem}
+.izu-trust-top .izu-trust-title{font-size:.62rem;letter-spacing:.2em}
+.izu-trust-top .izu-trust-sub{font-size:.6rem;letter-spacing:.04em}
 
 /* SECTION HEADERS */
 .izu-section{padding:6rem 5%;background:var(--white)}
