@@ -66,7 +66,7 @@ input.izu-input,textarea.izu-input{width:100%;background:transparent;border:none
 input.izu-input:focus,textarea.izu-input:focus{border-bottom-color:var(--brand)}
 .izu-form label{display:block;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--lt);margin-top:1.2rem}
 footer.izu-footer{background:var(--dk);padding:4rem 5% 2.5rem;color:rgba(253,250,246,.42);font-size:.78rem;margin-top:auto}
-.izu-footer .footer-logo{font-family:var(--serif);font-size:1.6rem;font-weight:600;font-style:italic;letter-spacing:.32em;color:var(--brand-lt)}
+.izu-footer .footer-logo{font-family:var(--serif);font-size:1.6rem;font-weight:600;font-style:italic;letter-spacing:.32em;color:var(--brand)}
 .izu-footer .copy{font-size:.58rem;letter-spacing:.12em;color:rgba(253,250,246,.18);margin-top:2rem}
 .shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.8rem}
 .p-card{cursor:pointer}
