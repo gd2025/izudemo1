@@ -25,7 +25,8 @@ nav.izu-nav{position:sticky;top:var(--bar-h);z-index:100;height:var(--nav-h);dis
 .nav-link:hover,.nav-link.is-open{color:var(--brand)}
 .nav-link svg{width:9px;height:9px;stroke:currentColor;stroke-width:1.4;fill:none;transition:transform .25s}
 .nav-link.is-open svg{transform:rotate(180deg)}
-.nav-logo{font-family:var(--serif);font-size:2rem;font-weight:600;font-style:italic;letter-spacing:.32em;color:var(--brand);text-shadow:0 0 1px rgba(197,52,42,.18)}
+a.nav-logo,.nav-logo{font-family:var(--serif);font-size:2rem;font-weight:600;font-style:italic;letter-spacing:.32em;color:var(--brand) !important;text-shadow:0 0 1px rgba(197,52,42,.18);transition:opacity .25s}
+a.nav-logo:hover{opacity:.82}
 .nav-icons{display:flex;align-items:center;gap:1.4rem}
 .nav-icon{width:17px;height:17px;stroke:var(--mid);fill:none;stroke-width:1.25;cursor:pointer;transition:stroke .25s}
 .nav-icon:hover{stroke:var(--brand)}
