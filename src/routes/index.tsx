@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { IzuLayout, formatPrice } from "@/components/IzuLayout";
+import { IzuLayout, MOODS, MOOD_IMAGES, formatPrice } from "@/components/IzuLayout";
 import heroParos from "@/assets/hero-paros.jpg";
 import featureKimono from "@/assets/feature-kimono.jpg";
 import featureDress from "@/assets/feature-dress.jpg";
@@ -9,16 +9,16 @@ import featureAccessories from "@/assets/feature-accessories.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "IZU Paros — Mediterranean Luxury, Born in the Cyclades" },
+      { title: "IZU Paros — Born in Paros. Worn everywhere." },
       {
         name: "description",
         content:
-          "Sun-drenched silhouettes, hand-finished fabrics. Resort wear inspired by the light of Paros — shipped worldwide.",
+          "Hand-finished Mediterranean resort wear from the island of Paros. Dresses, kimonos and accessories — born in Paros, worn everywhere.",
       },
-      { property: "og:title", content: "IZU Paros — Mediterranean Luxury" },
+      { property: "og:title", content: "IZU Paros — Born in Paros. Worn everywhere." },
       {
         property: "og:description",
-        content: "Sun-drenched silhouettes inspired by the light of Paros.",
+        content: "Hand-finished resort wear from the island of Paros.",
       },
       { property: "og:image", content: heroParos },
       { property: "og:type", content: "website" },
@@ -27,40 +27,55 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const featured = [
-  {
-    slug: "ios-linen-dress",
-    name: "Ios Linen Dress",
-    price: 24800,
-    image: heroParos,
-    tag: "New Arrival",
-  },
-  {
-    slug: "naoussa-silk-kimono",
-    name: "Naoussa Silk Kimono",
-    price: 38900,
-    image: featureKimono,
-    tag: "Limited",
-  },
-  {
-    slug: "kyma-sunset-dress",
-    name: "Kyma Sunset Dress",
-    price: 31500,
-    image: featureDress,
-    tag: "Bestseller",
-  },
-  {
-    slug: "paros-jewelry-set",
-    name: "Paros Jewelry Set",
-    price: 14200,
-    image: featureAccessories,
-    tag: "Handcrafted",
-  },
+type Product = {
+  slug: string;
+  name: string;
+  price: number;
+  image: string;
+  tag?: string;
+};
+
+const IMG_POOL = [heroParos, featureKimono, featureDress, featureAccessories];
+const img = (i: number) => IMG_POOL[i % IMG_POOL.length];
+
+const izuEdit: Product[] = [
+  { slug: "ios-linen-dress", name: "Ios Linen Dress", price: 24800, image: img(0), tag: "New" },
+  { slug: "naoussa-silk-kimono", name: "Naoussa Silk Kimono", price: 38900, image: img(1), tag: "Limited" },
+  { slug: "kyma-sunset-dress", name: "Kyma Sunset Dress", price: 31500, image: img(2), tag: "Editor's Pick" },
+  { slug: "paros-jewelry-set", name: "Paros Jewelry Set", price: 14200, image: img(3) },
+  { slug: "antiparos-cotton-set", name: "Antiparos Cotton Set", price: 22600, image: img(0) },
+  { slug: "marpissa-shirt", name: "Marpissa Linen Shirt", price: 16800, image: img(1) },
+  { slug: "lefkes-wrap-skirt", name: "Lefkes Wrap Skirt", price: 19500, image: img(2) },
+  { slug: "aliki-sandal", name: "Aliki Leather Sandal", price: 18900, image: img(3) },
 ];
+
+const bestSellers: Product[] = [
+  { slug: "ios-linen-dress", name: "Ios Linen Dress", price: 24800, image: img(0), tag: "#1 Bestseller" },
+  { slug: "kyma-sunset-dress", name: "Kyma Sunset Dress", price: 31500, image: img(2), tag: "Loved" },
+  { slug: "marpissa-shirt", name: "Marpissa Linen Shirt", price: 16800, image: img(1), tag: "Restocked" },
+  { slug: "naoussa-silk-kimono", name: "Naoussa Silk Kimono", price: 38900, image: img(1), tag: "Almost Gone" },
+  { slug: "aliki-sandal", name: "Aliki Leather Sandal", price: 18900, image: img(3), tag: "Loved" },
+  { slug: "paros-jewelry-set", name: "Paros Jewelry Set", price: 14200, image: img(3) },
+  { slug: "lefkes-wrap-skirt", name: "Lefkes Wrap Skirt", price: 19500, image: img(2), tag: "Trending" },
+  { slug: "antiparos-cotton-set", name: "Antiparos Cotton Set", price: 22600, image: img(0) },
+];
+
+const moodProducts = (mood: string): Product[] => {
+  const moodImg = MOOD_IMAGES[mood];
+  return [
+    { slug: `${mood}-piece-1`, name: "Aegean Slip Dress", price: 24800, image: moodImg },
+    { slug: `${mood}-piece-2`, name: "Sand Linen Set", price: 21900, image: img(0) },
+    { slug: `${mood}-piece-3`, name: "Salt Cotton Shirt", price: 14800, image: img(1) },
+    { slug: `${mood}-piece-4`, name: "Coastline Kimono", price: 32900, image: img(2) },
+    { slug: `${mood}-piece-5`, name: "Driftwood Sandal", price: 17900, image: img(3) },
+    { slug: `${mood}-piece-6`, name: "Naxos Wrap Skirt", price: 18900, image: moodImg },
+  ];
+};
 
 function HomePage() {
   const [scrollY, setScrollY] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [activeMood, setActiveMood] = useState(MOODS[0].slug);
 
   useEffect(() => {
     setMounted(true);
@@ -68,6 +83,8 @@ function HomePage() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const currentMoodProducts = moodProducts(activeMood);
 
   return (
     <IzuLayout cartCount={0}>
@@ -86,15 +103,12 @@ function HomePage() {
         <div className="izu-hero-gradient" />
 
         <div className={`izu-hero-content ${mounted ? "is-in" : ""}`}>
-          <span className="izu-eyebrow" style={{ animationDelay: "0.1s" }}>
+          <span className="izu-eyebrow izu-eyebrow-light" style={{ animationDelay: "0.1s" }}>
             Summer Collection — MMXXV
           </span>
           <h1 className="izu-hero-title">
-            <span style={{ animationDelay: "0.25s" }}>Born of</span>
-            <span style={{ animationDelay: "0.45s" }}>
-              <em>Mediterranean</em>
-            </span>
-            <span style={{ animationDelay: "0.65s" }}>light.</span>
+            <span style={{ animationDelay: "0.25s" }}>Born in <em>Paros.</em></span>
+            <span style={{ animationDelay: "0.55s" }}>Worn everywhere.</span>
           </h1>
           <p className="izu-hero-sub" style={{ animationDelay: "0.95s" }}>
             Hand-finished resort wear, woven on the island of Paros. Pieces made to
@@ -105,7 +119,7 @@ function HomePage() {
               Shop the Collection
             </Link>
             <Link to="/our-story" className="btn-outline izu-btn-ghost">
-              Our Story →
+              Explore the House →
             </Link>
           </div>
         </div>
@@ -125,7 +139,6 @@ function HomePage() {
           ["Concierge Styling", "Personal advice, anytime"],
         ].map(([t, s]) => (
           <div key={t} className="izu-trust-item">
-            <div className="izu-trust-dot" />
             <div>
               <div className="izu-trust-title">{t}</div>
               <div className="izu-trust-sub">{s}</div>
@@ -134,61 +147,107 @@ function HomePage() {
         ))}
       </section>
 
-      {/* FEATURED */}
-      <section className="izu-featured">
+      {/* IZU EDIT */}
+      <section className="izu-section izu-edit">
         <div className="izu-section-head">
-          <span className="izu-eyebrow">The Edit</span>
+          <span className="izu-eyebrow">The IZU Edit</span>
           <h2 className="izu-h2">
-            Pieces, <em>chosen by hand.</em>
+            This year's <em>best pieces.</em>
           </h2>
           <p className="izu-section-sub">
-            A curated selection from our atelier — the silhouettes our clients keep
-            returning for.
+            Curated by our atelier — eight silhouettes our clients keep returning for.
           </p>
         </div>
 
-        <div className="izu-product-grid">
-          {featured.map((p, i) => (
-            <RevealCard key={p.slug} index={i}>
-              <Link to="/product/$slug" params={{ slug: p.slug }} className="izu-pcard">
-                <div className="izu-pcard-img">
-                  <img src={p.image} alt={p.name} loading="lazy" />
-                  <span className="izu-pcard-tag">{p.tag}</span>
-                  <div className="izu-pcard-quick">Quick Add</div>
-                </div>
-                <div className="izu-pcard-meta">
-                  <h3>{p.name}</h3>
-                  <span>{formatPrice(p.price)}</span>
-                </div>
-              </Link>
-            </RevealCard>
-          ))}
-        </div>
+        <ProductGrid products={izuEdit} />
 
         <div className="izu-section-foot">
           <Link to="/shop" search={{ category: undefined }} className="btn-outline izu-btn-ghost">
-            View All Pieces
+            View The Edit
           </Link>
         </div>
       </section>
 
-      {/* EDITORIAL SPLIT */}
-      <section className="izu-editorial">
-        <div className="izu-editorial-img">
-          <img src={featureDress} alt="The light of Paros" loading="lazy" />
-        </div>
-        <div className="izu-editorial-text">
-          <span className="izu-eyebrow">The Atelier</span>
+      {/* SHOP BY MOOD */}
+      <section className="izu-mood">
+        <div className="izu-section-head">
+          <span className="izu-eyebrow">Shop by Mood</span>
           <h2 className="izu-h2">
-            A house built on <em>slowness.</em>
+            Dress for <em>the moment.</em>
           </h2>
-          <p>
-            Every IZU piece begins as a sketch by the harbor in Naoussa. We cut in
-            small batches, dye with mineral pigments, and finish each seam by hand —
-            so what arrives at your door carries the weight of an island summer.
+          <p className="izu-section-sub">
+            Five edits, drawn from the rhythm of an island day.
           </p>
-          <Link to="/our-story" className="btn-brand izu-btn-primary">
-            Discover the House
+        </div>
+
+        <div className="izu-mood-tabs" role="tablist">
+          {MOODS.map((m) => (
+            <button
+              key={m.slug}
+              role="tab"
+              aria-selected={activeMood === m.slug}
+              className={`izu-mood-tab ${activeMood === m.slug ? "is-active" : ""}`}
+              onClick={() => setActiveMood(m.slug)}
+            >
+              {m.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="izu-mood-stage" key={activeMood}>
+          <div className="izu-mood-feature">
+            <img src={MOOD_IMAGES[activeMood]} alt={activeMood} loading="lazy" />
+            <div className="izu-mood-feature-text">
+              <span className="izu-eyebrow izu-eyebrow-light">Mood</span>
+              <h3>{MOODS.find((m) => m.slug === activeMood)?.label}</h3>
+              <p>{MOODS.find((m) => m.slug === activeMood)?.caption}</p>
+              <a
+                href={`/shop?category=${encodeURIComponent(activeMood)}`}
+                className="btn-brand izu-btn-primary"
+              >
+                Shop the Mood
+              </a>
+            </div>
+          </div>
+
+          <div className="izu-mood-rail" aria-label={`${activeMood} pieces`}>
+            {currentMoodProducts.map((p) => (
+              <Link
+                key={p.slug}
+                to="/product/$slug"
+                params={{ slug: p.slug }}
+                className="izu-rail-card"
+              >
+                <div className="izu-rail-img">
+                  <img src={p.image} alt={p.name} loading="lazy" />
+                </div>
+                <div className="izu-rail-meta">
+                  <h4>{p.name}</h4>
+                  <span>{formatPrice(p.price)}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* BEST SELLERS */}
+      <section className="izu-section izu-bestsellers">
+        <div className="izu-section-head">
+          <span className="izu-eyebrow">Bestsellers</span>
+          <h2 className="izu-h2">
+            Worn <em>everywhere.</em>
+          </h2>
+          <p className="izu-section-sub">
+            The pieces our community keeps choosing — restocked by demand.
+          </p>
+        </div>
+
+        <ProductGrid products={bestSellers} refined />
+
+        <div className="izu-section-foot">
+          <Link to="/shop" search={{ category: undefined }} className="btn-brand izu-btn-primary">
+            Shop All Bestsellers
           </Link>
         </div>
       </section>
@@ -196,35 +255,42 @@ function HomePage() {
       {/* JOURNAL CTA */}
       <section className="izu-journal">
         <div className="izu-journal-inner">
-          <span className="izu-eyebrow" style={{ color: "rgba(253,250,246,.55)" }}>
-            The IZU Journal
-          </span>
+          <span className="izu-eyebrow izu-eyebrow-light">The IZU Journal</span>
           <h2 className="izu-h2 izu-h2-light">
             Receive the next chapter <em>first.</em>
           </h2>
           <p>
-            Private previews, atelier stories, and styling notes — once a month, no
-            more.
+            Private previews, atelier stories, and styling notes — once a month, no more.
           </p>
-          <form
-            className="izu-journal-form"
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <input
-              type="email"
-              placeholder="Your email"
-              required
-              className="izu-journal-input"
-            />
-            <button type="submit" className="btn-brand izu-btn-primary">
-              Subscribe
-            </button>
+          <form className="izu-journal-form" onSubmit={(e) => e.preventDefault()}>
+            <input type="email" placeholder="Your email" required className="izu-journal-input" />
+            <button type="submit" className="btn-brand izu-btn-primary">Subscribe</button>
           </form>
         </div>
       </section>
     </IzuLayout>
+  );
+}
+
+function ProductGrid({ products, refined = false }: { products: Product[]; refined?: boolean }) {
+  return (
+    <div className={`izu-product-grid ${refined ? "is-refined" : ""}`}>
+      {products.map((p, i) => (
+        <RevealCard key={`${p.slug}-${i}`} index={i}>
+          <Link to="/product/$slug" params={{ slug: p.slug }} className="izu-pcard">
+            <div className="izu-pcard-img">
+              <img src={p.image} alt={p.name} loading="lazy" />
+              {p.tag && <span className="izu-pcard-tag">{p.tag}</span>}
+              <div className="izu-pcard-quick">Quick Add</div>
+            </div>
+            <div className="izu-pcard-meta">
+              <h3>{p.name}</h3>
+              <span>{formatPrice(p.price)}</span>
+            </div>
+          </Link>
+        </RevealCard>
+      ))}
+    </div>
   );
 }
 
@@ -242,7 +308,7 @@ function RevealCard({ children, index }: { children: React.ReactNode; index: num
           obs.disconnect();
         }
       },
-      { threshold: 0.15 },
+      { threshold: 0.12 },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -252,7 +318,7 @@ function RevealCard({ children, index }: { children: React.ReactNode; index: num
     <div
       ref={ref}
       className={`izu-reveal ${visible ? "is-in" : ""}`}
-      style={{ transitionDelay: `${index * 90}ms` }}
+      style={{ transitionDelay: `${(index % 4) * 80}ms` }}
     >
       {children}
     </div>
@@ -264,12 +330,12 @@ const pageStyles = `
 .izu-hero{position:relative;height:calc(100vh - var(--bar-h) - var(--nav-h));min-height:620px;overflow:hidden;background:var(--dk)}
 .izu-hero-bg{position:absolute;inset:-5%;background-size:cover;background-position:center;will-change:transform;transition:transform .1s linear}
 .izu-hero-grain{position:absolute;inset:0;background-image:radial-gradient(rgba(0,0,0,.12) 1px,transparent 1px);background-size:3px 3px;opacity:.35;pointer-events:none}
-.izu-hero-gradient{position:absolute;inset:0;background:linear-gradient(180deg,rgba(36,24,16,.15) 0%,rgba(36,24,16,.05) 35%,rgba(36,24,16,.55) 100%);pointer-events:none}
-.izu-hero-content{position:absolute;left:6%;bottom:14%;max-width:640px;color:var(--white);z-index:5}
+.izu-hero-gradient{position:absolute;inset:0;background:linear-gradient(180deg,rgba(36,24,16,.18) 0%,rgba(36,24,16,.05) 35%,rgba(36,24,16,.6) 100%);pointer-events:none}
+.izu-hero-content{position:absolute;left:6%;bottom:14%;max-width:680px;color:var(--white);z-index:5}
 .izu-hero-content > *{opacity:0;transform:translateY(24px)}
 .izu-hero-content.is-in > *{animation:izuRise 1.1s cubic-bezier(.2,.7,.2,1) forwards}
-.izu-hero-content .izu-eyebrow{color:rgba(253,250,246,.78);display:inline-block;margin-bottom:1.4rem}
-.izu-hero-title{font-family:var(--serif);font-weight:300;font-size:clamp(3rem,7.5vw,6.8rem);line-height:.98;margin:0 0 1.6rem;letter-spacing:-.01em}
+.izu-hero-content .izu-eyebrow-light{color:rgba(253,250,246,.78);display:inline-block;margin-bottom:1.4rem}
+.izu-hero-title{font-family:var(--serif);font-weight:300;font-size:clamp(3rem,7vw,6.4rem);line-height:1;margin:0 0 1.6rem;letter-spacing:-.01em}
 .izu-hero-title span{display:block}
 .izu-hero-title em{font-style:italic;color:var(--brand-lt)}
 .izu-hero-sub{font-size:1rem;line-height:1.7;color:rgba(253,250,246,.85);max-width:440px;margin:0 0 2.2rem;font-weight:300}
@@ -286,24 +352,26 @@ const pageStyles = `
 
 /* TRUST */
 .izu-trust{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--cream);border-bottom:.5px solid var(--parch)}
-.izu-trust-item{padding:1.6rem 1.4rem;display:flex;align-items:center;gap:.9rem;border-right:.5px solid var(--parch)}
+.izu-trust-item{padding:1.6rem 1.4rem;display:flex;align-items:center;justify-content:center;gap:.9rem;border-right:.5px solid var(--parch);text-align:center}
 .izu-trust-item:last-child{border-right:none}
-.izu-trust-dot{width:6px;height:6px;border-radius:50%;background:var(--brand);flex-shrink:0}
 .izu-trust-title{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dk);font-weight:400}
 .izu-trust-sub{font-size:.7rem;color:var(--lt);margin-top:.2rem}
 
 /* SECTION HEADERS */
+.izu-section{padding:6rem 5%;background:var(--white)}
 .izu-section-head{text-align:center;max-width:640px;margin:0 auto 3.5rem}
 .izu-eyebrow{font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--brand);font-weight:400;display:inline-block;margin-bottom:1rem}
+.izu-eyebrow-light{color:rgba(253,250,246,.7)!important}
 .izu-h2{font-family:var(--serif);font-weight:300;font-size:clamp(2.2rem,4.5vw,3.8rem);line-height:1.05;color:var(--dk);margin:0 0 1rem;letter-spacing:-.005em}
 .izu-h2 em{font-style:italic;color:var(--brand)}
 .izu-h2-light{color:var(--white)}
+.izu-h2-light em{color:var(--brand-lt)}
 .izu-section-sub{font-size:.92rem;color:var(--mid);line-height:1.7;margin:0}
 .izu-section-foot{text-align:center;margin-top:3rem}
 
-/* FEATURED */
-.izu-featured{padding:6rem 5%;background:var(--white)}
+/* PRODUCT GRID */
 .izu-product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;max-width:1480px;margin:0 auto}
+.izu-product-grid.is-refined{gap:2.4rem}
 .izu-reveal{opacity:0;transform:translateY(40px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
 .izu-reveal.is-in{opacity:1;transform:translateY(0)}
 .izu-pcard{display:block;cursor:pointer;color:inherit}
@@ -311,19 +379,43 @@ const pageStyles = `
 .izu-pcard-img img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1),filter .6s}
 .izu-pcard:hover .izu-pcard-img img{transform:scale(1.06);filter:brightness(.92)}
 .izu-pcard-tag{position:absolute;top:1rem;left:1rem;background:var(--white);color:var(--dk);font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;padding:.45rem .8rem;font-weight:400}
+.izu-bestsellers .izu-pcard-tag{background:var(--brand);color:var(--white)}
 .izu-pcard-quick{position:absolute;left:1rem;right:1rem;bottom:1rem;background:var(--dk);color:var(--white);text-align:center;padding:.85rem;font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;transform:translateY(120%);transition:transform .45s cubic-bezier(.2,.7,.2,1)}
 .izu-pcard:hover .izu-pcard-quick{transform:translateY(0)}
 .izu-pcard-meta{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
 .izu-pcard-meta h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.15rem;margin:0;color:var(--dk)}
 .izu-pcard-meta span{font-size:.78rem;color:var(--mid);letter-spacing:.06em}
 
-/* EDITORIAL */
-.izu-editorial{display:grid;grid-template-columns:1fr 1fr;background:var(--cream);min-height:640px}
-.izu-editorial-img{position:relative;overflow:hidden}
-.izu-editorial-img img{width:100%;height:100%;object-fit:cover;transition:transform 8s ease-out}
-.izu-editorial:hover .izu-editorial-img img{transform:scale(1.04)}
-.izu-editorial-text{display:flex;flex-direction:column;justify-content:center;padding:5rem 6rem;max-width:600px}
-.izu-editorial-text p{font-size:.95rem;line-height:1.85;color:var(--mid);margin:0 0 2rem}
+/* SHOP BY MOOD */
+.izu-mood{padding:6rem 0;background:var(--cream);overflow:hidden}
+.izu-mood .izu-section-head{padding:0 5%}
+.izu-mood-tabs{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;padding:0 5%;margin-bottom:3rem}
+.izu-mood-tab{font-family:var(--sans);font-size:.66rem;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:var(--mid);background:transparent;border:.5px solid var(--clay);padding:.85rem 1.4rem;cursor:pointer;transition:all .3s}
+.izu-mood-tab:hover{color:var(--brand);border-color:var(--brand)}
+.izu-mood-tab.is-active{background:var(--dk);color:var(--white);border-color:var(--dk)}
+.izu-mood-stage{animation:izuMoodFade .6s cubic-bezier(.2,.7,.2,1)}
+@keyframes izuMoodFade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.izu-mood-feature{position:relative;height:520px;margin:0 5% 2.5rem;overflow:hidden}
+.izu-mood-feature img{width:100%;height:100%;object-fit:cover;animation:izuMoodZoom 12s ease-out infinite alternate}
+@keyframes izuMoodZoom{from{transform:scale(1)}to{transform:scale(1.08)}}
+.izu-mood-feature:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(36,24,16,.55) 0%,rgba(36,24,16,.15) 60%,transparent 100%)}
+.izu-mood-feature-text{position:absolute;left:3rem;top:50%;transform:translateY(-50%);color:var(--white);max-width:380px;z-index:2}
+.izu-mood-feature-text h3{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(2rem,4vw,3.2rem);margin:.5rem 0 .8rem;line-height:1;color:var(--white)}
+.izu-mood-feature-text p{font-size:.92rem;color:rgba(253,250,246,.85);margin:0 0 1.8rem;line-height:1.7}
+.izu-mood-rail{display:flex;gap:1.4rem;overflow-x:auto;padding:.5rem 5% 2rem;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:var(--clay) transparent}
+.izu-mood-rail::-webkit-scrollbar{height:4px}
+.izu-mood-rail::-webkit-scrollbar-thumb{background:var(--clay);border-radius:2px}
+.izu-rail-card{flex:0 0 240px;scroll-snap-align:start;color:inherit}
+.izu-rail-img{aspect-ratio:3/4;overflow:hidden;background:var(--parch);margin-bottom:.8rem}
+.izu-rail-img img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+.izu-rail-card:hover .izu-rail-img img{transform:scale(1.06)}
+.izu-rail-meta{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem}
+.izu-rail-meta h4{font-family:var(--serif);font-style:italic;font-weight:400;font-size:1rem;margin:0;color:var(--dk)}
+.izu-rail-meta span{font-size:.72rem;color:var(--mid);letter-spacing:.06em}
+
+/* BESTSELLERS */
+.izu-bestsellers{background:var(--white)}
+.izu-bestsellers .izu-pcard-meta h3{font-size:1.18rem}
 
 /* JOURNAL */
 .izu-journal{background:var(--dk);padding:6rem 5%;text-align:center;position:relative;overflow:hidden}
@@ -341,9 +433,8 @@ const pageStyles = `
   .izu-trust{grid-template-columns:repeat(2,1fr)}
   .izu-trust-item:nth-child(2){border-right:none}
   .izu-trust-item:nth-child(1),.izu-trust-item:nth-child(2){border-bottom:.5px solid var(--parch)}
-  .izu-editorial{grid-template-columns:1fr}
-  .izu-editorial-img{aspect-ratio:4/3}
-  .izu-editorial-text{padding:3.5rem 2rem;max-width:none}
+  .izu-mood-feature{height:440px}
+  .izu-mood-feature-text{left:2rem;max-width:320px}
 }
 @media(max-width:680px){
   .izu-hero{height:auto;min-height:560px;padding:5rem 0 4rem}
@@ -353,8 +444,11 @@ const pageStyles = `
   .izu-trust-item{border-right:none;border-bottom:.5px solid var(--parch)}
   .izu-trust-item:last-child{border-bottom:none}
   .izu-product-grid{grid-template-columns:repeat(2,1fr);gap:1.2rem}
-  .izu-featured{padding:4rem 5%}
+  .izu-section{padding:4rem 5%}
+  .izu-mood{padding:4rem 0}
+  .izu-mood-feature{height:380px;margin:0 0 2rem}
+  .izu-mood-feature-text{left:1.4rem;right:1.4rem;max-width:none}
+  .izu-rail-card{flex:0 0 180px}
   .izu-journal{padding:4rem 5%}
-  .izu-editorial-text{padding:3rem 1.6rem}
 }
 `;
