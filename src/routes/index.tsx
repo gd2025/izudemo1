@@ -90,21 +90,22 @@ function HomePage() {
     <IzuLayout cartCount={0}>
       <style dangerouslySetInnerHTML={{ __html: pageStyles }} />
 
-      {/* TRUST STRIP — above hero */}
-      <section className="izu-trust izu-trust-top">
-        {[
-          ["Complimentary Worldwide Shipping", "Orders over €150"],
-          ["30-Day Effortless Returns", "On every order"],
-          ["Hand-Finished in Greece", "Small batch, ethically made"],
-          ["Concierge Styling", "Personal advice, anytime"],
-        ].map(([t, s]) => (
-          <div key={t} className="izu-trust-item">
-            <div>
-              <div className="izu-trust-title">{t}</div>
-              <div className="izu-trust-sub">{s}</div>
+      {/* VALUE BAR — premium announcement strip above hero */}
+      <section className="izu-value-bar" aria-label="Brand promises">
+        <div className="izu-value-inner">
+          {[
+            ["Worldwide Shipping", "Orders over €150"],
+            ["Effortless Returns", "Within 30 days"],
+            ["Hand-Finished", "In Paros, Greece"],
+            ["Concierge Styling", "By appointment"],
+          ].map(([t, s], i) => (
+            <div key={t} className="izu-value-item" style={{ animationDelay: `${0.08 * i}s` }}>
+              <span className="izu-value-title">{t}</span>
+              <span className="izu-value-dot" aria-hidden="true" />
+              <span className="izu-value-sub">{s}</span>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </section>
 
       {/* HERO */}
@@ -358,11 +359,22 @@ const pageStyles = `
 .izu-trust-item:last-child{border-right:none}
 .izu-trust-title{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dk);font-weight:400}
 .izu-trust-sub{font-size:.7rem;color:var(--lt);margin-top:.2rem}
-/* Top strip variant — slimmer, sits above hero */
-.izu-trust-top{background:var(--white);border-top:.5px solid var(--parch)}
-.izu-trust-top .izu-trust-item{padding:.95rem 1rem}
-.izu-trust-top .izu-trust-title{font-size:.62rem;letter-spacing:.2em}
-.izu-trust-top .izu-trust-sub{font-size:.6rem;letter-spacing:.04em}
+
+/* VALUE BAR — premium announcement strip (above hero) */
+.izu-value-bar{background:linear-gradient(180deg,var(--white) 0%,var(--cream) 100%);border-top:.5px solid rgba(197,52,42,.08);border-bottom:.5px solid rgba(197,52,42,.08);padding:.9rem 5%}
+.izu-value-inner{max-width:1480px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);align-items:center;gap:1.5rem}
+.izu-value-item{display:flex;align-items:baseline;justify-content:center;gap:.7rem;white-space:nowrap;opacity:0;transform:translateY(6px);animation:izuValueIn .7s cubic-bezier(.2,.7,.2,1) forwards}
+.izu-value-title{font-family:var(--serif);font-style:italic;font-weight:500;font-size:.92rem;color:var(--dk);letter-spacing:.01em}
+.izu-value-dot{width:3px;height:3px;border-radius:50%;background:var(--brand);opacity:.75;flex-shrink:0;transform:translateY(-2px)}
+.izu-value-sub{font-family:var(--sans);font-weight:300;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--lt)}
+@keyframes izuValueIn{to{opacity:1;transform:translateY(0)}}
+@media(max-width:900px){
+  .izu-value-bar{padding:.7rem 1rem;overflow:hidden}
+  .izu-value-inner{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:max-content;gap:2.2rem;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;mask-image:linear-gradient(90deg,transparent 0,#000 24px,#000 calc(100% - 24px),transparent 100%)}
+  .izu-value-inner::-webkit-scrollbar{display:none}
+  .izu-value-title{font-size:.82rem}
+  .izu-value-sub{font-size:.55rem;letter-spacing:.18em}
+}
 
 /* SECTION HEADERS */
 .izu-section{padding:6rem 5%;background:var(--white)}
