@@ -90,6 +90,23 @@ function HomePage() {
     <IzuLayout cartCount={0}>
       <style dangerouslySetInnerHTML={{ __html: pageStyles }} />
 
+      {/* TRUST STRIP — above hero */}
+      <section className="izu-trust izu-trust-top">
+        {[
+          ["Complimentary Worldwide Shipping", "Orders over €150"],
+          ["30-Day Effortless Returns", "On every order"],
+          ["Hand-Finished in Greece", "Small batch, ethically made"],
+          ["Concierge Styling", "Personal advice, anytime"],
+        ].map(([t, s]) => (
+          <div key={t} className="izu-trust-item">
+            <div>
+              <div className="izu-trust-title">{t}</div>
+              <div className="izu-trust-sub">{s}</div>
+            </div>
+          </div>
+        ))}
+      </section>
+
       {/* HERO */}
       <section className="izu-hero">
         <div
