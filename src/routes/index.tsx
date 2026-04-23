@@ -90,21 +90,22 @@ function HomePage() {
     <IzuLayout cartCount={0}>
       <style dangerouslySetInnerHTML={{ __html: pageStyles }} />
 
-      {/* TRUST STRIP — above hero */}
-      <section className="izu-trust izu-trust-top">
-        {[
-          ["Complimentary Worldwide Shipping", "Orders over €150"],
-          ["30-Day Effortless Returns", "On every order"],
-          ["Hand-Finished in Greece", "Small batch, ethically made"],
-          ["Concierge Styling", "Personal advice, anytime"],
-        ].map(([t, s]) => (
-          <div key={t} className="izu-trust-item">
-            <div>
-              <div className="izu-trust-title">{t}</div>
-              <div className="izu-trust-sub">{s}</div>
+      {/* VALUE BAR — premium announcement strip above hero */}
+      <section className="izu-value-bar" aria-label="Brand promises">
+        <div className="izu-value-inner">
+          {[
+            ["Worldwide Shipping", "Orders over €150"],
+            ["Effortless Returns", "Within 30 days"],
+            ["Hand-Finished", "In Paros, Greece"],
+            ["Concierge Styling", "By appointment"],
+          ].map(([t, s], i) => (
+            <div key={t} className="izu-value-item" style={{ animationDelay: `${0.08 * i}s` }}>
+              <span className="izu-value-title">{t}</span>
+              <span className="izu-value-dot" aria-hidden="true" />
+              <span className="izu-value-sub">{s}</span>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </section>
 
       {/* HERO */}
