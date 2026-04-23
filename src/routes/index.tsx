@@ -90,6 +90,23 @@ function HomePage() {
     <IzuLayout cartCount={0}>
       <style dangerouslySetInnerHTML={{ __html: pageStyles }} />
 
+      {/* TRUST STRIP — above hero */}
+      <section className="izu-trust izu-trust-top">
+        {[
+          ["Complimentary Worldwide Shipping", "Orders over €150"],
+          ["30-Day Effortless Returns", "On every order"],
+          ["Hand-Finished in Greece", "Small batch, ethically made"],
+          ["Concierge Styling", "Personal advice, anytime"],
+        ].map(([t, s]) => (
+          <div key={t} className="izu-trust-item">
+            <div>
+              <div className="izu-trust-title">{t}</div>
+              <div className="izu-trust-sub">{s}</div>
+            </div>
+          </div>
+        ))}
+      </section>
+
       {/* HERO */}
       <section className="izu-hero">
         <div
@@ -130,22 +147,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* TRUST BAR */}
-      <section className="izu-trust">
-        {[
-          ["Complimentary Worldwide Shipping", "Orders over €150"],
-          ["30-Day Effortless Returns", "On every order"],
-          ["Hand-Finished in Greece", "Small batch, ethically made"],
-          ["Concierge Styling", "Personal advice, anytime"],
-        ].map(([t, s]) => (
-          <div key={t} className="izu-trust-item">
-            <div>
-              <div className="izu-trust-title">{t}</div>
-              <div className="izu-trust-sub">{s}</div>
-            </div>
-          </div>
-        ))}
-      </section>
+
 
       {/* IZU EDIT */}
       <section className="izu-section izu-edit">
@@ -356,6 +358,11 @@ const pageStyles = `
 .izu-trust-item:last-child{border-right:none}
 .izu-trust-title{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--dk);font-weight:400}
 .izu-trust-sub{font-size:.7rem;color:var(--lt);margin-top:.2rem}
+/* Top strip variant — slimmer, sits above hero */
+.izu-trust-top{background:var(--white);border-top:.5px solid var(--parch)}
+.izu-trust-top .izu-trust-item{padding:.95rem 1rem}
+.izu-trust-top .izu-trust-title{font-size:.62rem;letter-spacing:.2em}
+.izu-trust-top .izu-trust-sub{font-size:.6rem;letter-spacing:.04em}
 
 /* SECTION HEADERS */
 .izu-section{padding:6rem 5%;background:var(--white)}
