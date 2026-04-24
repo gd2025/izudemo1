@@ -5,11 +5,11 @@ const styles = `
 :root{
   --white:#FDFAF6;--cream:#F5EDE0;--parch:#EDE3D3;--sand:#D6C4A8;
   --brand:#C5342A;--brand-dk:#9E2820;--brand-lt:#E05A4E;
-  --earth:#8C6348;--clay:#B08060;
+  --ochre:#B8843A;--terracotta:#B4533A;--earth:#8C6348;--clay:#B08060;
   --dk:#241810;--mid:#705040;--lt:#A08070;--ghost:#C8B4A4;
   --serif:'Cormorant Garamond',Georgia,serif;
   --sans:'Jost',system-ui,sans-serif;
-  --bar-h:40px;--nav-h:72px;
+  --bar-h:40px;--nav-h:72px;--subnav-h:0px;
 }
 body.izu-page{background:var(--white);color:var(--dk);font-family:var(--sans);font-weight:300;font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased;margin:0}
 .izu-root{min-height:100vh;display:flex;flex-direction:column}
@@ -45,6 +45,16 @@ a.nav-logo:hover{opacity:.82}
 .mood-mega-label{position:absolute;left:1rem;right:1rem;bottom:.9rem;color:var(--white);font-family:var(--serif);font-style:italic;font-weight:400;font-size:1.05rem;letter-spacing:.01em;z-index:2}
 .mood-mega-label small{display:block;font-family:var(--sans);font-style:normal;font-size:.55rem;letter-spacing:.26em;text-transform:uppercase;color:rgba(253,250,246,.7);margin-bottom:.3rem;font-weight:400}
 
+/* Mobile pill subnav (always visible on mobile) */
+.mobile-subnav{display:none}
+@media(max-width:900px){
+  .mobile-subnav{display:flex;position:sticky;top:calc(var(--bar-h) + var(--nav-h));z-index:95;background:rgba(253,250,246,.98);backdrop-filter:blur(10px);border-bottom:.5px solid var(--parch);padding:.55rem .9rem;gap:.5rem;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .mobile-subnav::-webkit-scrollbar{display:none}
+  .mobile-subnav a{flex:0 0 auto;padding:.5rem .95rem;border:.5px solid var(--clay);border-radius:999px;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dk);background:var(--white);transition:all .25s;font-weight:400}
+  .mobile-subnav a.accent{background:var(--brand);border-color:var(--brand);color:var(--white)}
+  .mobile-subnav a:hover,.mobile-subnav a:active{background:var(--brand);border-color:var(--brand);color:var(--white)}
+}
+
 /* Mobile menu */
 .mobile-toggle{display:none;background:none;border:none;cursor:pointer;padding:.4rem;color:var(--mid)}
 .mobile-toggle svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.4;fill:none}
@@ -66,9 +76,26 @@ a.nav-logo:hover{opacity:.82}
 input.izu-input,textarea.izu-input{width:100%;background:transparent;border:none;border-bottom:1px solid var(--clay);outline:none;font-family:var(--sans);font-size:.85rem;color:var(--dk);padding:.9rem 0}
 input.izu-input:focus,textarea.izu-input:focus{border-bottom-color:var(--brand)}
 .izu-form label{display:block;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--lt);margin-top:1.2rem}
-footer.izu-footer{background:var(--dk);padding:4rem 5% 2.5rem;color:rgba(253,250,246,.42);font-size:.78rem;margin-top:auto}
-.izu-footer .footer-logo{font-family:var(--serif);font-size:1.6rem;font-weight:600;font-style:italic;letter-spacing:.32em;color:var(--brand)}
-.izu-footer .copy{font-size:.58rem;letter-spacing:.12em;color:rgba(253,250,246,.18);margin-top:2rem}
+
+/* Professional Footer */
+footer.izu-footer{background:var(--dk);padding:4.5rem 5% 2rem;color:rgba(253,250,246,.55);font-size:.78rem;margin-top:auto}
+.izu-footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:3rem;max-width:1480px;margin:0 auto;padding-bottom:3rem;border-bottom:.5px solid rgba(253,250,246,.08)}
+.izu-footer-col h4{font-family:var(--sans);font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--white);font-weight:400;margin:0 0 1.4rem}
+.izu-footer-col a{display:block;font-size:.78rem;color:rgba(253,250,246,.55);padding:.4rem 0;font-weight:300;letter-spacing:.04em;transition:color .25s}
+.izu-footer-col a:hover{color:var(--brand-lt)}
+.izu-footer .footer-logo{font-family:var(--serif);font-size:1.8rem;font-weight:600;font-style:italic;letter-spacing:.32em;color:var(--brand);margin-bottom:.9rem}
+.izu-footer-col p.tag{font-family:var(--serif);font-style:italic;font-size:1rem;color:rgba(253,250,246,.65);line-height:1.6;margin:0 0 1.6rem;font-weight:300}
+.footer-news{display:flex;border-bottom:.5px solid rgba(253,250,246,.18);padding:.5rem 0}
+.footer-news input{flex:1;background:transparent;border:none;outline:none;color:var(--white);font-family:var(--sans);font-size:.78rem;padding:.4rem 0}
+.footer-news input::placeholder{color:rgba(253,250,246,.35)}
+.footer-news button{background:none;border:none;color:var(--brand-lt);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;font-family:var(--sans);padding:0 .4rem}
+.footer-pay{display:flex;gap:.55rem;margin-top:1.4rem;flex-wrap:wrap}
+.footer-pay span{padding:.35rem .65rem;border:.5px solid rgba(253,250,246,.18);border-radius:3px;font-size:.55rem;letter-spacing:.16em;color:rgba(253,250,246,.5);font-weight:500}
+.izu-footer-bottom{max-width:1480px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding-top:1.8rem;flex-wrap:wrap;gap:1rem}
+.izu-footer .copy{font-size:.6rem;letter-spacing:.14em;color:rgba(253,250,246,.3);font-weight:400}
+.footer-social{display:flex;gap:1.2rem}
+.footer-social a{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(253,250,246,.45)}
+
 .shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.8rem}
 .p-card{cursor:pointer}
 .p-img{position:relative;aspect-ratio:3/4;overflow:hidden;margin-bottom:1.1rem;background:var(--parch)}
@@ -76,7 +103,7 @@ footer.izu-footer{background:var(--dk);padding:4rem 5% 2.5rem;color:rgba(253,250
 .p-card:hover .p-img img{transform:scale(1.05)}
 .p-name{font-family:var(--serif);font-size:1.1rem;font-weight:400;font-style:italic;color:var(--dk);margin:0 0 .28rem}
 .p-price{font-size:.72rem;letter-spacing:.1em;color:var(--mid)}
-@media(max-width:1100px){.shop-grid{grid-template-columns:repeat(2,1fr)}.mood-mega-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:1100px){.shop-grid{grid-template-columns:repeat(2,1fr)}.mood-mega-grid{grid-template-columns:repeat(3,1fr)}.izu-footer-grid{grid-template-columns:1fr 1fr;gap:2.4rem}}
 @media(max-width:900px){
   nav.izu-nav{padding:0 1.4rem}
   .nav-left,.nav-right .nav-link:not(.cart-badge),.nav-right .nav-link{display:none}
@@ -85,7 +112,7 @@ footer.izu-footer{background:var(--dk);padding:4rem 5% 2.5rem;color:rgba(253,250
   .mobile-toggle{display:inline-flex;align-items:center;justify-content:center}
   .mood-mega{display:none}
 }
-@media(max-width:600px){:root{--nav-h:62px;--bar-h:36px}.shop-grid{grid-template-columns:repeat(2,1fr);gap:1rem}.nav-logo{font-size:1.7rem;letter-spacing:.28em}}
+@media(max-width:600px){:root{--nav-h:62px;--bar-h:36px}.shop-grid{grid-template-columns:repeat(2,1fr);gap:1rem}.nav-logo{font-size:1.7rem;letter-spacing:.28em}.izu-footer-grid{grid-template-columns:1fr;gap:2.2rem;padding-bottom:2rem}}
 `;
 
 export const MOODS = [
@@ -164,7 +191,7 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
 
           <div className="nav-right">
             <a href="/our-story" className="nav-link">Our Story</a>
-            <a href="/contact" className="nav-link">Contact</a>
+            <a href="/boutiques" className="nav-link">Boutiques</a>
             <a href="/login" className="nav-link">Account</a>
             <div className="nav-icons">
               <a href="/cart" aria-label="Cart" className="cart-badge">
@@ -192,6 +219,16 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
             </button>
           </div>
         </nav>
+
+        {/* Mobile pill subnav — visible on mobile only */}
+        <div className="mobile-subnav" aria-label="Quick navigation">
+          <a href="/our-story" className="accent">Our Story</a>
+          <a href="/shop?category=Sea%20%26%20Salt">Shop by Mood</a>
+          <a href="/shop?category=Dresses">Dresses</a>
+          <a href="/shop?category=Kimonos">Kimonos</a>
+          <a href="/boutiques">Boutiques</a>
+          <a href="/shop">Shop All</a>
+        </div>
 
         {/* Desktop mega menu */}
         <div
@@ -226,6 +263,7 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
           <a href="/shop?category=Dresses" onClick={() => setMobileOpen(false)}>Dresses</a>
           <a href="/shop?category=Kimonos" onClick={() => setMobileOpen(false)}>Kimonos</a>
           <a href="/our-story" onClick={() => setMobileOpen(false)}>Our Story</a>
+          <a href="/boutiques" onClick={() => setMobileOpen(false)}>Boutiques</a>
           <a href="/contact" onClick={() => setMobileOpen(false)}>Contact</a>
           <a href="/login" onClick={() => setMobileOpen(false)}>Account</a>
           <a href="/cart" onClick={() => setMobileOpen(false)}>Cart ({cartCount})</a>
@@ -234,8 +272,49 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
         {children}
 
         <footer className="izu-footer">
-          <div className="footer-logo">IZU</div>
-          <div className="copy">© {new Date().getFullYear()} IZU Paros. Born in Paros. Worn everywhere.</div>
+          <div className="izu-footer-grid">
+            <div className="izu-footer-col">
+              <div className="footer-logo">IZU</div>
+              <p className="tag">Born in Paros. Worn everywhere. A heritage of two worlds, made by careful hands.</p>
+              <form className="footer-news" onSubmit={(e) => e.preventDefault()}>
+                <input type="email" placeholder="Email for the IZU letter" aria-label="Newsletter email" />
+                <button type="submit">Join</button>
+              </form>
+              <div className="footer-pay">
+                <span>VISA</span><span>MC</span><span>AMEX</span><span>PAYPAL</span><span>APPLE PAY</span>
+              </div>
+            </div>
+            <div className="izu-footer-col">
+              <h4>Shop</h4>
+              <a href="/shop">All Pieces</a>
+              <a href="/shop?category=Dresses">Dresses</a>
+              <a href="/shop?category=Kimonos">Kimonos</a>
+              <a href="/shop?category=Sets">Sets</a>
+              <a href="/shop?category=Scarfs">Scarfs</a>
+            </div>
+            <div className="izu-footer-col">
+              <h4>Company</h4>
+              <a href="/our-story">Our Story</a>
+              <a href="/boutiques">Boutiques</a>
+              <a href="/contact">Contact</a>
+              <a href="/shop">Lookbook</a>
+            </div>
+            <div className="izu-footer-col">
+              <h4>Support</h4>
+              <a href="/contact">Shipping & Returns</a>
+              <a href="/contact">Size Guide</a>
+              <a href="/contact">Privacy Policy</a>
+              <a href="/contact">Terms of Service</a>
+              <a href="/contact">Care Instructions</a>
+            </div>
+          </div>
+          <div className="izu-footer-bottom">
+            <div className="copy">© {new Date().getFullYear()} IZU Paros — Established 2003. Handpicked in India. Made for you in Paros.</div>
+            <div className="footer-social">
+              <a href="#" aria-label="Instagram">Instagram</a>
+              <a href="#" aria-label="Pinterest">Pinterest</a>
+            </div>
+          </div>
         </footer>
       </div>
     </>

@@ -255,6 +255,29 @@ function HomePage() {
         </div>
       </section>
 
+      {/* IZU MUSES — social proof grid */}
+      <section className="izu-muses">
+        <div className="izu-section-head">
+          <span className="izu-eyebrow">@izu.paros</span>
+          <h2 className="izu-h2">The IZU <em>Muses.</em></h2>
+          <p className="izu-section-sub">Real women, real light. Tag #wornIZU to be featured.</p>
+        </div>
+        <div className="izu-muses-grid">
+          {[
+            { img: MOOD_IMAGES["Sea & Salt"], handle: "@elena.k", caption: "Ios Linen Dress in Antiparos" },
+            { img: MOOD_IMAGES["Sunset Hour"], handle: "@maria.studio", caption: "Naoussa Silk Kimono at golden hour" },
+            { img: MOOD_IMAGES["The Slow Days"], handle: "@sofia.travels", caption: "Marpissa Shirt, long lunch" },
+            { img: MOOD_IMAGES["Mornings In Paros"], handle: "@anna.parikia", caption: "Lefkes Wrap in the morning market" },
+          ].map((m, i) => (
+            <a key={i} href="https://instagram.com" target="_blank" rel="noreferrer" className="izu-muse-card">
+              <div className="izu-muse-img"><img src={m.img} alt={m.caption} loading="lazy" /></div>
+              <div className="izu-muse-meta"><strong>{m.handle}</strong><span>{m.caption}</span></div>
+            </a>
+          ))}
+        </div>
+        <div className="izu-section-foot"><a href="https://instagram.com" target="_blank" rel="noreferrer" className="btn-outline">Follow on Instagram</a></div>
+      </section>
+
       {/* JOURNAL CTA */}
       <section className="izu-journal">
         <div className="izu-journal-inner">
@@ -435,6 +458,21 @@ const pageStyles = `
 /* BESTSELLERS */
 .izu-bestsellers{background:var(--white)}
 .izu-bestsellers .izu-pcard-meta h3{font-size:1.18rem}
+
+/* IZU MUSES */
+.izu-muses{padding:6rem 5%;background:var(--cream)}
+.izu-muses .izu-section-head{text-align:center;max-width:640px;margin:0 auto 3rem}
+.izu-muses-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;max-width:1480px;margin:0 auto}
+.izu-muse-card{display:block;color:inherit;cursor:pointer}
+.izu-muse-img{aspect-ratio:1/1;overflow:hidden;background:var(--parch);position:relative}
+.izu-muse-img img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+.izu-muse-img:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(36,24,16,.45));opacity:0;transition:opacity .35s}
+.izu-muse-card:hover .izu-muse-img img{transform:scale(1.06)}
+.izu-muse-card:hover .izu-muse-img:after{opacity:1}
+.izu-muse-meta{padding:.9rem .2rem 0;display:flex;flex-direction:column;gap:.18rem}
+.izu-muse-meta strong{font-family:var(--sans);font-weight:400;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--brand)}
+.izu-muse-meta span{font-family:var(--serif);font-style:italic;font-size:.92rem;color:var(--mid);font-weight:400}
+@media(max-width:900px){.izu-muses-grid{grid-template-columns:repeat(2,1fr);gap:.9rem}}
 
 /* JOURNAL */
 .izu-journal{background:var(--dk);padding:6rem 5%;text-align:center;position:relative;overflow:hidden}
