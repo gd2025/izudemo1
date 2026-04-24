@@ -116,11 +116,13 @@ footer.izu-footer{background:var(--dk);padding:4.5rem 5% 2rem;color:rgba(253,250
 `;
 
 export const MOODS = [
-  { slug: "Sea & Salt", label: "Sea & Salt", caption: "Linen for the shore" },
+  { slug: "Sea & Salt", label: "Sea & Salt", caption: "Cotton & silk for the shore" },
   { slug: "Sunset Hour", label: "Sunset Hour", caption: "Silk in golden light" },
   { slug: "The Slow Days", label: "The Slow Days", caption: "Long lunches, lazy afternoons" },
   { slug: "Mornings In Paros", label: "Mornings In Paros", caption: "Soft starts, fresh bread" },
   { slug: "Effortless in Every Step", label: "Effortless", caption: "Made to move" },
+  { slug: "Sunset Dinner", label: "Sunset Dinner", caption: "Candles by the sea" },
+  { slug: "Beach Walk", label: "Beach Walk", caption: "Sand under bare feet" },
 ];
 
 import moodSeaSalt from "@/assets/mood-sea-salt.jpg";
@@ -128,6 +130,8 @@ import moodSunset from "@/assets/mood-sunset-hour.jpg";
 import moodSlow from "@/assets/mood-slow-days.jpg";
 import moodMornings from "@/assets/mood-mornings-paros.jpg";
 import moodEffortless from "@/assets/mood-effortless.jpg";
+import moodSunsetDinner from "@/assets/mood-sunset-dinner.jpg";
+import moodBeachWalk from "@/assets/mood-beach-walk.jpg";
 
 export const MOOD_IMAGES: Record<string, string> = {
   "Sea & Salt": moodSeaSalt,
@@ -135,6 +139,18 @@ export const MOOD_IMAGES: Record<string, string> = {
   "The Slow Days": moodSlow,
   "Mornings In Paros": moodMornings,
   "Effortless in Every Step": moodEffortless,
+  "Sunset Dinner": moodSunsetDinner,
+  "Beach Walk": moodBeachWalk,
+};
+
+export const MOOD_DESCRIPTIONS: Record<string, string> = {
+  "Sea & Salt": "Pieces that move with the wind and dry in the sun. Made for the shore.",
+  "Sunset Hour": "Silks that catch the last light. The IZU dresses you reach for at dusk.",
+  "The Slow Days": "Long lunches, longer afternoons. Easy fabrics that ask nothing of you.",
+  "Mornings In Paros": "Bakery, market, harbour. The first hours of an island day.",
+  "Effortless in Every Step": "One bag, one week. The IZU pieces that travel with you anywhere.",
+  "Sunset Dinner": "Candle-lit, terracotta-hour. Dressed for the table by the sea.",
+  "Beach Walk": "Sand-soft fabrics, salt-loved colours. For the long walk at golden hour.",
 };
 
 export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; cartCount?: number }) {
