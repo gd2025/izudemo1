@@ -190,14 +190,14 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
           <div className="nav-left">
             <a href="/shop" className="nav-link">Shop</a>
             <div className="mood-menu-wrap" onMouseEnter={() => setMoodOpen(true)} onMouseLeave={() => setMoodOpen(false)}>
-              <button
+              <a
+                href="/moods"
                 className={`nav-link ${moodOpen ? "is-open" : ""}`}
-                onClick={() => setMoodOpen((v) => !v)}
                 aria-expanded={moodOpen}
               >
                 Shop by Mood
                 <svg viewBox="0 0 12 12"><path d="M3 4.5L6 7.5L9 4.5" /></svg>
-              </button>
+              </a>
             </div>
             <a href="/shop?category=Dresses" className="nav-link">Dresses</a>
             <a href="/shop?category=Kimonos" className="nav-link">Kimonos</a>
@@ -239,7 +239,7 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
         {/* Mobile pill subnav — visible on mobile only */}
         <div className="mobile-subnav" aria-label="Quick navigation">
           <a href="/our-story" className="accent">Our Story</a>
-          <a href="/shop?category=Sea%20%26%20Salt">Shop by Mood</a>
+          <a href="/moods">Shop by Mood</a>
           <a href="/shop?category=Dresses">Dresses</a>
           <a href="/shop?category=Kimonos">Kimonos</a>
           <a href="/boutiques">Boutiques</a>
@@ -253,8 +253,8 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
           onMouseLeave={() => setMoodOpen(false)}
         >
           <div className="mood-mega-grid">
-            {MOODS.map((m) => (
-              <a key={m.slug} href={`/shop?category=${encodeURIComponent(m.slug)}`} className="mood-mega-card">
+            {MOODS.slice(0, 5).map((m) => (
+              <a key={m.slug} href={`/moods/${encodeURIComponent(m.slug)}`} className="mood-mega-card">
                 <img src={MOOD_IMAGES[m.slug]} alt={m.label} loading="lazy" />
                 <div className="mood-mega-label">
                   <small>Mood</small>
@@ -263,15 +263,18 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
               </a>
             ))}
           </div>
+          <div style={{ textAlign: "center", marginTop: "1.4rem" }}>
+            <a href="/moods" style={{ fontSize: ".62rem", letterSpacing: ".24em", textTransform: "uppercase", color: "var(--brand)", borderBottom: ".5px solid var(--brand)", paddingBottom: ".3rem" }}>View all moods →</a>
+          </div>
         </div>
 
-        {/* Mobile drawer */}
+        {/* Mobile drawer — hidden menu, includes Journal/Newsletter/Policies */}
         <div className={`mobile-drawer ${mobileOpen ? "is-open" : ""}`}>
           <a href="/shop" onClick={() => setMobileOpen(false)}>Shop All</a>
           <div style={{ padding: "1rem 0", borderBottom: ".5px solid var(--parch)" }}>
             <div style={{ fontSize: ".78rem", letterSpacing: ".18em", textTransform: "uppercase", color: "var(--brand)", marginBottom: ".4rem" }}>Shop by Mood</div>
             {MOODS.map((m) => (
-              <a key={m.slug} href={`/shop?category=${encodeURIComponent(m.slug)}`} className="mobile-sub" onClick={() => setMobileOpen(false)}>
+              <a key={m.slug} href={`/moods/${encodeURIComponent(m.slug)}`} className="mobile-sub" onClick={() => setMobileOpen(false)}>
                 {m.label}
               </a>
             ))}
@@ -280,6 +283,11 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
           <a href="/shop?category=Kimonos" onClick={() => setMobileOpen(false)}>Kimonos</a>
           <a href="/our-story" onClick={() => setMobileOpen(false)}>Our Story</a>
           <a href="/boutiques" onClick={() => setMobileOpen(false)}>Boutiques</a>
+          <a href="/journal" onClick={() => setMobileOpen(false)}>Journal</a>
+          <a href="/newsletter" onClick={() => setMobileOpen(false)}>Newsletter</a>
+          <a href="/shipping" onClick={() => setMobileOpen(false)}>Shipping Information</a>
+          <a href="/returns" onClick={() => setMobileOpen(false)}>Returns Policy</a>
+          <a href="/privacy" onClick={() => setMobileOpen(false)}>Privacy Policy</a>
           <a href="/contact" onClick={() => setMobileOpen(false)}>Contact</a>
           <a href="/login" onClick={() => setMobileOpen(false)}>Account</a>
           <a href="/cart" onClick={() => setMobileOpen(false)}>Cart ({cartCount})</a>
