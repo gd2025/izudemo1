@@ -78,8 +78,10 @@ export type Database = {
           category: string | null
           created_at: string
           description: string | null
+          fabric: string | null
           id: string
           image_url: string | null
+          moods: string[] | null
           name: string
           price_cents: number
           slug: string
@@ -88,8 +90,10 @@ export type Database = {
           category?: string | null
           created_at?: string
           description?: string | null
+          fabric?: string | null
           id?: string
           image_url?: string | null
+          moods?: string[] | null
           name: string
           price_cents: number
           slug: string
@@ -98,8 +102,10 @@ export type Database = {
           category?: string | null
           created_at?: string
           description?: string | null
+          fabric?: string | null
           id?: string
           image_url?: string | null
+          moods?: string[] | null
           name?: string
           price_cents?: number
           slug?: string
