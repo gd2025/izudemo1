@@ -96,6 +96,18 @@ footer.izu-footer{background:var(--dk);padding:4.5rem 5% 2rem;color:rgba(253,250
 .footer-social{display:flex;gap:1.2rem}
 .footer-social a{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(253,250,246,.45)}
 
+/* Footer map */
+.footer-map-wrap{max-width:1480px;margin:0 auto 3rem;display:grid;grid-template-columns:1fr 1.6fr;gap:2.4rem;align-items:stretch;padding-bottom:2.4rem;border-bottom:.5px solid rgba(253,250,246,.08)}
+.footer-map-text h4{font-family:var(--sans);font-size:.6rem;letter-spacing:.26em;text-transform:uppercase;color:var(--white);font-weight:400;margin:0 0 1.4rem}
+.footer-map-store{margin-bottom:1.4rem;display:flex;flex-direction:column;gap:.3rem}
+.footer-map-store strong{font-family:var(--serif);font-style:italic;font-weight:500;font-size:1.05rem;color:var(--brand-lt);letter-spacing:.02em}
+.footer-map-store span{font-size:.78rem;color:rgba(253,250,246,.55);font-weight:300;line-height:1.5}
+.footer-map-store a{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--brand-lt);margin-top:.3rem;border-bottom:.5px solid rgba(224,90,78,.4);padding-bottom:.2rem;align-self:flex-start;display:inline-block;transition:color .25s}
+.footer-map-store a:hover{color:var(--white)}
+.footer-map-frame{position:relative;min-height:240px;border:.5px solid rgba(253,250,246,.12);background:#1a1108;overflow:hidden}
+.footer-map-frame iframe{width:100%;height:100%;min-height:240px;border:0;filter:grayscale(.4) contrast(1.05) brightness(.92)}
+@media(max-width:900px){.footer-map-wrap{grid-template-columns:1fr;gap:1.4rem}.footer-map-frame{min-height:220px}}
+
 .shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.8rem}
 .p-card{cursor:pointer}
 .p-img{position:relative;aspect-ratio:3/4;overflow:hidden;margin-bottom:1.1rem;background:var(--parch)}
@@ -116,11 +128,13 @@ footer.izu-footer{background:var(--dk);padding:4.5rem 5% 2rem;color:rgba(253,250
 `;
 
 export const MOODS = [
-  { slug: "Sea & Salt", label: "Sea & Salt", caption: "Linen for the shore" },
+  { slug: "Sea & Salt", label: "Sea & Salt", caption: "Cotton & silk for the shore" },
   { slug: "Sunset Hour", label: "Sunset Hour", caption: "Silk in golden light" },
   { slug: "The Slow Days", label: "The Slow Days", caption: "Long lunches, lazy afternoons" },
   { slug: "Mornings In Paros", label: "Mornings In Paros", caption: "Soft starts, fresh bread" },
   { slug: "Effortless in Every Step", label: "Effortless", caption: "Made to move" },
+  { slug: "Sunset Dinner", label: "Sunset Dinner", caption: "Candles by the sea" },
+  { slug: "Beach Walk", label: "Beach Walk", caption: "Sand under bare feet" },
 ];
 
 import moodSeaSalt from "@/assets/mood-sea-salt.jpg";
@@ -128,6 +142,8 @@ import moodSunset from "@/assets/mood-sunset-hour.jpg";
 import moodSlow from "@/assets/mood-slow-days.jpg";
 import moodMornings from "@/assets/mood-mornings-paros.jpg";
 import moodEffortless from "@/assets/mood-effortless.jpg";
+import moodSunsetDinner from "@/assets/mood-sunset-dinner.jpg";
+import moodBeachWalk from "@/assets/mood-beach-walk.jpg";
 
 export const MOOD_IMAGES: Record<string, string> = {
   "Sea & Salt": moodSeaSalt,
@@ -135,6 +151,18 @@ export const MOOD_IMAGES: Record<string, string> = {
   "The Slow Days": moodSlow,
   "Mornings In Paros": moodMornings,
   "Effortless in Every Step": moodEffortless,
+  "Sunset Dinner": moodSunsetDinner,
+  "Beach Walk": moodBeachWalk,
+};
+
+export const MOOD_DESCRIPTIONS: Record<string, string> = {
+  "Sea & Salt": "Pieces that move with the wind and dry in the sun. Made for the shore.",
+  "Sunset Hour": "Silks that catch the last light. The IZU dresses you reach for at dusk.",
+  "The Slow Days": "Long lunches, longer afternoons. Easy fabrics that ask nothing of you.",
+  "Mornings In Paros": "Bakery, market, harbour. The first hours of an island day.",
+  "Effortless in Every Step": "One bag, one week. The IZU pieces that travel with you anywhere.",
+  "Sunset Dinner": "Candle-lit, terracotta-hour. Dressed for the table by the sea.",
+  "Beach Walk": "Sand-soft fabrics, salt-loved colours. For the long walk at golden hour.",
 };
 
 export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; cartCount?: number }) {
@@ -174,14 +202,14 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
           <div className="nav-left">
             <a href="/shop" className="nav-link">Shop</a>
             <div className="mood-menu-wrap" onMouseEnter={() => setMoodOpen(true)} onMouseLeave={() => setMoodOpen(false)}>
-              <button
+              <a
+                href="/moods"
                 className={`nav-link ${moodOpen ? "is-open" : ""}`}
-                onClick={() => setMoodOpen((v) => !v)}
                 aria-expanded={moodOpen}
               >
                 Shop by Mood
                 <svg viewBox="0 0 12 12"><path d="M3 4.5L6 7.5L9 4.5" /></svg>
-              </button>
+              </a>
             </div>
             <a href="/shop?category=Dresses" className="nav-link">Dresses</a>
             <a href="/shop?category=Kimonos" className="nav-link">Kimonos</a>
@@ -223,7 +251,7 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
         {/* Mobile pill subnav — visible on mobile only */}
         <div className="mobile-subnav" aria-label="Quick navigation">
           <a href="/our-story" className="accent">Our Story</a>
-          <a href="/shop?category=Sea%20%26%20Salt">Shop by Mood</a>
+          <a href="/moods">Shop by Mood</a>
           <a href="/shop?category=Dresses">Dresses</a>
           <a href="/shop?category=Kimonos">Kimonos</a>
           <a href="/boutiques">Boutiques</a>
@@ -237,8 +265,8 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
           onMouseLeave={() => setMoodOpen(false)}
         >
           <div className="mood-mega-grid">
-            {MOODS.map((m) => (
-              <a key={m.slug} href={`/shop?category=${encodeURIComponent(m.slug)}`} className="mood-mega-card">
+            {MOODS.slice(0, 5).map((m) => (
+              <a key={m.slug} href={`/moods/${encodeURIComponent(m.slug)}`} className="mood-mega-card">
                 <img src={MOOD_IMAGES[m.slug]} alt={m.label} loading="lazy" />
                 <div className="mood-mega-label">
                   <small>Mood</small>
@@ -247,15 +275,18 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
               </a>
             ))}
           </div>
+          <div style={{ textAlign: "center", marginTop: "1.4rem" }}>
+            <a href="/moods" style={{ fontSize: ".62rem", letterSpacing: ".24em", textTransform: "uppercase", color: "var(--brand)", borderBottom: ".5px solid var(--brand)", paddingBottom: ".3rem" }}>View all moods →</a>
+          </div>
         </div>
 
-        {/* Mobile drawer */}
+        {/* Mobile drawer — hidden menu, includes Journal/Newsletter/Policies */}
         <div className={`mobile-drawer ${mobileOpen ? "is-open" : ""}`}>
           <a href="/shop" onClick={() => setMobileOpen(false)}>Shop All</a>
           <div style={{ padding: "1rem 0", borderBottom: ".5px solid var(--parch)" }}>
             <div style={{ fontSize: ".78rem", letterSpacing: ".18em", textTransform: "uppercase", color: "var(--brand)", marginBottom: ".4rem" }}>Shop by Mood</div>
             {MOODS.map((m) => (
-              <a key={m.slug} href={`/shop?category=${encodeURIComponent(m.slug)}`} className="mobile-sub" onClick={() => setMobileOpen(false)}>
+              <a key={m.slug} href={`/moods/${encodeURIComponent(m.slug)}`} className="mobile-sub" onClick={() => setMobileOpen(false)}>
                 {m.label}
               </a>
             ))}
@@ -264,6 +295,11 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
           <a href="/shop?category=Kimonos" onClick={() => setMobileOpen(false)}>Kimonos</a>
           <a href="/our-story" onClick={() => setMobileOpen(false)}>Our Story</a>
           <a href="/boutiques" onClick={() => setMobileOpen(false)}>Boutiques</a>
+          <a href="/journal" onClick={() => setMobileOpen(false)}>Journal</a>
+          <a href="/newsletter" onClick={() => setMobileOpen(false)}>Newsletter</a>
+          <a href="/shipping" onClick={() => setMobileOpen(false)}>Shipping Information</a>
+          <a href="/returns" onClick={() => setMobileOpen(false)}>Returns Policy</a>
+          <a href="/privacy" onClick={() => setMobileOpen(false)}>Privacy Policy</a>
           <a href="/contact" onClick={() => setMobileOpen(false)}>Contact</a>
           <a href="/login" onClick={() => setMobileOpen(false)}>Account</a>
           <a href="/cart" onClick={() => setMobileOpen(false)}>Cart ({cartCount})</a>
@@ -272,6 +308,32 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
         {children}
 
         <footer className="izu-footer">
+          {/* Boutique map — Paros locations */}
+          <div className="footer-map-wrap">
+            <div className="footer-map-text">
+              <h4>Visit Us in Paros</h4>
+              <div className="footer-map-store">
+                <strong>IZU Parikia</strong>
+                <span>Market Street, Old Town, Parikia, 84400 Paros</span>
+                <a href="https://maps.google.com/?q=Parikia+Paros" target="_blank" rel="noreferrer">Get Directions →</a>
+              </div>
+              <div className="footer-map-store">
+                <strong>IZU Naoussa</strong>
+                <span>Old Port, Naoussa, 84401 Paros</span>
+                <a href="https://maps.google.com/?q=Naoussa+Paros" target="_blank" rel="noreferrer">Get Directions →</a>
+              </div>
+            </div>
+            <div className="footer-map-frame">
+              <iframe
+                title="IZU Boutiques on Paros"
+                src="https://www.google.com/maps?q=Paros,+Greece&output=embed"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+            </div>
+          </div>
+
           <div className="izu-footer-grid">
             <div className="izu-footer-col">
               <div className="footer-logo">IZU</div>
@@ -291,25 +353,27 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
               <a href="/shop?category=Kimonos">Kimonos</a>
               <a href="/shop?category=Sets">Sets</a>
               <a href="/shop?category=Scarfs">Scarfs</a>
+              <a href="/moods">Shop by Mood</a>
             </div>
             <div className="izu-footer-col">
               <h4>Company</h4>
               <a href="/our-story">Our Story</a>
               <a href="/boutiques">Boutiques</a>
+              <a href="/journal">Journal</a>
+              <a href="/newsletter">Newsletter</a>
               <a href="/contact">Contact</a>
-              <a href="/shop">Lookbook</a>
             </div>
             <div className="izu-footer-col">
               <h4>Support</h4>
-              <a href="/contact">Shipping & Returns</a>
-              <a href="/contact">Size Guide</a>
-              <a href="/contact">Privacy Policy</a>
+              <a href="/shipping">Shipping Information</a>
+              <a href="/returns">Returns Policy</a>
+              <a href="/privacy">Privacy Policy</a>
               <a href="/contact">Terms of Service</a>
               <a href="/contact">Care Instructions</a>
             </div>
           </div>
           <div className="izu-footer-bottom">
-            <div className="copy">© {new Date().getFullYear()} IZU Paros — Established 2003. Handpicked in India. Made for you in Paros.</div>
+            <div className="copy">© {new Date().getFullYear()} IZU Paros — Established before 2000. Handpicked in India. Made for you in Paros.</div>
             <div className="footer-social">
               <a href="#" aria-label="Instagram">Instagram</a>
               <a href="#" aria-label="Pinterest">Pinterest</a>

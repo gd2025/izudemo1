@@ -10,17 +10,39 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as ShippingRouteImport } from './routes/shipping'
+import { Route as ReturnsRouteImport } from './routes/returns'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as OurStoryRouteImport } from './routes/our-story'
+import { Route as NewsletterRouteImport } from './routes/newsletter'
+import { Route as MoodsRouteImport } from './routes/moods'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as JournalRouteImport } from './routes/journal'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as BoutiquesRouteImport } from './routes/boutiques'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
+import { Route as MoodsSlugRouteImport } from './routes/moods.$slug'
 
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShippingRoute = ShippingRouteImport.update({
+  id: '/shipping',
+  path: '/shipping',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReturnsRoute = ReturnsRouteImport.update({
+  id: '/returns',
+  path: '/returns',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OurStoryRoute = OurStoryRouteImport.update({
@@ -28,9 +50,24 @@ const OurStoryRoute = OurStoryRouteImport.update({
   path: '/our-story',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NewsletterRoute = NewsletterRouteImport.update({
+  id: '/newsletter',
+  path: '/newsletter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoodsRoute = MoodsRouteImport.update({
+  id: '/moods',
+  path: '/moods',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JournalRoute = JournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -58,15 +95,27 @@ const ProductSlugRoute = ProductSlugRouteImport.update({
   path: '/product/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MoodsSlugRoute = MoodsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => MoodsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/boutiques': typeof BoutiquesRoute
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
+  '/journal': typeof JournalRoute
   '/login': typeof LoginRoute
+  '/moods': typeof MoodsRouteWithChildren
+  '/newsletter': typeof NewsletterRoute
   '/our-story': typeof OurStoryRoute
+  '/privacy': typeof PrivacyRoute
+  '/returns': typeof ReturnsRoute
+  '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/moods/$slug': typeof MoodsSlugRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRoutesByTo {
@@ -74,9 +123,16 @@ export interface FileRoutesByTo {
   '/boutiques': typeof BoutiquesRoute
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
+  '/journal': typeof JournalRoute
   '/login': typeof LoginRoute
+  '/moods': typeof MoodsRouteWithChildren
+  '/newsletter': typeof NewsletterRoute
   '/our-story': typeof OurStoryRoute
+  '/privacy': typeof PrivacyRoute
+  '/returns': typeof ReturnsRoute
+  '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/moods/$slug': typeof MoodsSlugRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRoutesById {
@@ -85,9 +141,16 @@ export interface FileRoutesById {
   '/boutiques': typeof BoutiquesRoute
   '/cart': typeof CartRoute
   '/contact': typeof ContactRoute
+  '/journal': typeof JournalRoute
   '/login': typeof LoginRoute
+  '/moods': typeof MoodsRouteWithChildren
+  '/newsletter': typeof NewsletterRoute
   '/our-story': typeof OurStoryRoute
+  '/privacy': typeof PrivacyRoute
+  '/returns': typeof ReturnsRoute
+  '/shipping': typeof ShippingRoute
   '/shop': typeof ShopRoute
+  '/moods/$slug': typeof MoodsSlugRoute
   '/product/$slug': typeof ProductSlugRoute
 }
 export interface FileRouteTypes {
@@ -97,9 +160,16 @@ export interface FileRouteTypes {
     | '/boutiques'
     | '/cart'
     | '/contact'
+    | '/journal'
     | '/login'
+    | '/moods'
+    | '/newsletter'
     | '/our-story'
+    | '/privacy'
+    | '/returns'
+    | '/shipping'
     | '/shop'
+    | '/moods/$slug'
     | '/product/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -107,9 +177,16 @@ export interface FileRouteTypes {
     | '/boutiques'
     | '/cart'
     | '/contact'
+    | '/journal'
     | '/login'
+    | '/moods'
+    | '/newsletter'
     | '/our-story'
+    | '/privacy'
+    | '/returns'
+    | '/shipping'
     | '/shop'
+    | '/moods/$slug'
     | '/product/$slug'
   id:
     | '__root__'
@@ -117,9 +194,16 @@ export interface FileRouteTypes {
     | '/boutiques'
     | '/cart'
     | '/contact'
+    | '/journal'
     | '/login'
+    | '/moods'
+    | '/newsletter'
     | '/our-story'
+    | '/privacy'
+    | '/returns'
+    | '/shipping'
     | '/shop'
+    | '/moods/$slug'
     | '/product/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -128,8 +212,14 @@ export interface RootRouteChildren {
   BoutiquesRoute: typeof BoutiquesRoute
   CartRoute: typeof CartRoute
   ContactRoute: typeof ContactRoute
+  JournalRoute: typeof JournalRoute
   LoginRoute: typeof LoginRoute
+  MoodsRoute: typeof MoodsRouteWithChildren
+  NewsletterRoute: typeof NewsletterRoute
   OurStoryRoute: typeof OurStoryRoute
+  PrivacyRoute: typeof PrivacyRoute
+  ReturnsRoute: typeof ReturnsRoute
+  ShippingRoute: typeof ShippingRoute
   ShopRoute: typeof ShopRoute
   ProductSlugRoute: typeof ProductSlugRoute
 }
@@ -143,6 +233,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/shipping': {
+      id: '/shipping'
+      path: '/shipping'
+      fullPath: '/shipping'
+      preLoaderRoute: typeof ShippingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/returns': {
+      id: '/returns'
+      path: '/returns'
+      fullPath: '/returns'
+      preLoaderRoute: typeof ReturnsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/our-story': {
       id: '/our-story'
       path: '/our-story'
@@ -150,11 +261,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OurStoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/newsletter': {
+      id: '/newsletter'
+      path: '/newsletter'
+      fullPath: '/newsletter'
+      preLoaderRoute: typeof NewsletterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/moods': {
+      id: '/moods'
+      path: '/moods'
+      fullPath: '/moods'
+      preLoaderRoute: typeof MoodsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journal': {
+      id: '/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof JournalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -192,16 +324,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/moods/$slug': {
+      id: '/moods/$slug'
+      path: '/$slug'
+      fullPath: '/moods/$slug'
+      preLoaderRoute: typeof MoodsSlugRouteImport
+      parentRoute: typeof MoodsRoute
+    }
   }
 }
+
+interface MoodsRouteChildren {
+  MoodsSlugRoute: typeof MoodsSlugRoute
+}
+
+const MoodsRouteChildren: MoodsRouteChildren = {
+  MoodsSlugRoute: MoodsSlugRoute,
+}
+
+const MoodsRouteWithChildren = MoodsRoute._addFileChildren(MoodsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BoutiquesRoute: BoutiquesRoute,
   CartRoute: CartRoute,
   ContactRoute: ContactRoute,
+  JournalRoute: JournalRoute,
   LoginRoute: LoginRoute,
+  MoodsRoute: MoodsRouteWithChildren,
+  NewsletterRoute: NewsletterRoute,
   OurStoryRoute: OurStoryRoute,
+  PrivacyRoute: PrivacyRoute,
+  ReturnsRoute: ReturnsRoute,
+  ShippingRoute: ShippingRoute,
   ShopRoute: ShopRoute,
   ProductSlugRoute: ProductSlugRoute,
 }

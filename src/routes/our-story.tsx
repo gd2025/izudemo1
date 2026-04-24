@@ -8,7 +8,7 @@ export const Route = createFileRoute("/our-story")({
   head: () => ({
     meta: [
       { title: "Our Story — IZU Paros · Twenty Years of Quiet Intention" },
-      { name: "description", content: "IZU was born on Paros. For over two decades we have bridged the Aegean and India, making heritage pieces by careful hands." },
+      { name: "description", content: "IZU was born on Paros before the millennium. For over two decades we have bridged the Aegean and India, making heritage pieces by careful hands." },
       { property: "og:title", content: "Our Story — IZU Paros" },
       { property: "og:description", content: "Twenty years of quiet intention. A synthesis of two worlds — Paros and India." },
       { property: "og:image", content: storyFamily },
@@ -109,8 +109,8 @@ function OurStoryPage() {
 
         {/* Title overlapping image */}
         <div className="os-title-block">
-          <span className="label">Our Story · Established 2003</span>
-          <h1>Twenty years of quiet intention.</h1>
+          <span className="label">Our Story · Established before 2000</span>
+          <h1>Over two decades of quiet intention.</h1>
           <div className="est">Paros · India · Worn Everywhere</div>
           <div className="os-title-rule" />
         </div>
@@ -135,7 +135,7 @@ function OurStoryPage() {
             <div className="os-sign-mark">IZU</div>
             <div className="os-sign-name">
               <strong>The Family</strong>
-              Mother &amp; Daughter · Parikia, Paros
+              Mother &amp; Sons · Parikia, Paros
             </div>
           </div>
         </section>

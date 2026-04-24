@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { IzuLayout, formatPrice } from "@/components/IzuLayout";
+import { resolveProductImage } from "@/lib/product-images";
 
 export const Route = createFileRoute("/product/$slug")({
   component: ProductPage,
@@ -118,7 +119,7 @@ function ProductPage() {
         ) : (
           <div className="pdp-grid">
             <div className="pdp-img">
-              {product.image_url && <img src={product.image_url} alt={product.name} />}
+              <img src={resolveProductImage(product.image_url, product.category)} alt={product.name} />
               <span className="pdp-badge">Handpicked in India</span>
             </div>
             <div className="pdp-info">
