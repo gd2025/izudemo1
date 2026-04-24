@@ -255,6 +255,29 @@ function HomePage() {
         </div>
       </section>
 
+      {/* IZU MUSES — social proof grid */}
+      <section className="izu-muses">
+        <div className="izu-section-head">
+          <span className="izu-eyebrow">@izu.paros</span>
+          <h2 className="izu-h2">The IZU <em>Muses.</em></h2>
+          <p className="izu-section-sub">Real women, real light. Tag #wornIZU to be featured.</p>
+        </div>
+        <div className="izu-muses-grid">
+          {[
+            { img: MOOD_IMAGES["Sea & Salt"], handle: "@elena.k", caption: "Ios Linen Dress in Antiparos" },
+            { img: MOOD_IMAGES["Sunset Hour"], handle: "@maria.studio", caption: "Naoussa Silk Kimono at golden hour" },
+            { img: MOOD_IMAGES["The Slow Days"], handle: "@sofia.travels", caption: "Marpissa Shirt, long lunch" },
+            { img: MOOD_IMAGES["Mornings In Paros"], handle: "@anna.parikia", caption: "Lefkes Wrap in the morning market" },
+          ].map((m, i) => (
+            <a key={i} href="https://instagram.com" target="_blank" rel="noreferrer" className="izu-muse-card">
+              <div className="izu-muse-img"><img src={m.img} alt={m.caption} loading="lazy" /></div>
+              <div className="izu-muse-meta"><strong>{m.handle}</strong><span>{m.caption}</span></div>
+            </a>
+          ))}
+        </div>
+        <div className="izu-section-foot"><a href="https://instagram.com" target="_blank" rel="noreferrer" className="btn-outline">Follow on Instagram</a></div>
+      </section>
+
       {/* JOURNAL CTA */}
       <section className="izu-journal">
         <div className="izu-journal-inner">
