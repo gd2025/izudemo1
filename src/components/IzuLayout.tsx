@@ -296,6 +296,32 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
         {children}
 
         <footer className="izu-footer">
+          {/* Boutique map — Paros locations */}
+          <div className="footer-map-wrap">
+            <div className="footer-map-text">
+              <h4>Visit Us in Paros</h4>
+              <div className="footer-map-store">
+                <strong>IZU Parikia</strong>
+                <span>Market Street, Old Town, Parikia, 84400 Paros</span>
+                <a href="https://maps.google.com/?q=Parikia+Paros" target="_blank" rel="noreferrer">Get Directions →</a>
+              </div>
+              <div className="footer-map-store">
+                <strong>IZU Naoussa</strong>
+                <span>Old Port, Naoussa, 84401 Paros</span>
+                <a href="https://maps.google.com/?q=Naoussa+Paros" target="_blank" rel="noreferrer">Get Directions →</a>
+              </div>
+            </div>
+            <div className="footer-map-frame">
+              <iframe
+                title="IZU Boutiques on Paros"
+                src="https://www.google.com/maps?q=Paros,+Greece&output=embed"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+              />
+            </div>
+          </div>
+
           <div className="izu-footer-grid">
             <div className="izu-footer-col">
               <div className="footer-logo">IZU</div>
@@ -315,25 +341,27 @@ export function IzuLayout({ children, cartCount = 0 }: { children: ReactNode; ca
               <a href="/shop?category=Kimonos">Kimonos</a>
               <a href="/shop?category=Sets">Sets</a>
               <a href="/shop?category=Scarfs">Scarfs</a>
+              <a href="/moods">Shop by Mood</a>
             </div>
             <div className="izu-footer-col">
               <h4>Company</h4>
               <a href="/our-story">Our Story</a>
               <a href="/boutiques">Boutiques</a>
+              <a href="/journal">Journal</a>
+              <a href="/newsletter">Newsletter</a>
               <a href="/contact">Contact</a>
-              <a href="/shop">Lookbook</a>
             </div>
             <div className="izu-footer-col">
               <h4>Support</h4>
-              <a href="/contact">Shipping & Returns</a>
-              <a href="/contact">Size Guide</a>
-              <a href="/contact">Privacy Policy</a>
+              <a href="/shipping">Shipping Information</a>
+              <a href="/returns">Returns Policy</a>
+              <a href="/privacy">Privacy Policy</a>
               <a href="/contact">Terms of Service</a>
               <a href="/contact">Care Instructions</a>
             </div>
           </div>
           <div className="izu-footer-bottom">
-            <div className="copy">© {new Date().getFullYear()} IZU Paros — Established 2003. Handpicked in India. Made for you in Paros.</div>
+            <div className="copy">© {new Date().getFullYear()} IZU Paros — Established before 2000. Handpicked in India. Made for you in Paros.</div>
             <div className="footer-social">
               <a href="#" aria-label="Instagram">Instagram</a>
               <a href="#" aria-label="Pinterest">Pinterest</a>
