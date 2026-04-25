@@ -5,6 +5,7 @@ import heroParos from "@/assets/hero-paros.jpg";
 import featureKimono from "@/assets/feature-kimono.jpg";
 import featureDress from "@/assets/feature-dress.jpg";
 import featureAccessories from "@/assets/feature-accessories.jpg";
+import storyFamily from "@/assets/story-family-artisans.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -150,27 +151,6 @@ function HomePage() {
 
 
 
-      {/* IZU EDIT */}
-      <section className="izu-section izu-edit">
-        <div className="izu-section-head">
-          <span className="izu-eyebrow">The IZU Edit</span>
-          <h2 className="izu-h2">
-            This year's <em>best pieces.</em>
-          </h2>
-          <p className="izu-section-sub">
-            Curated by our atelier — eight silhouettes our clients keep returning for.
-          </p>
-        </div>
-
-        <ProductGrid products={izuEdit} />
-
-        <div className="izu-section-foot">
-          <Link to="/shop" search={{ category: undefined }} className="btn-outline izu-btn-ghost">
-            View The Edit
-          </Link>
-        </div>
-      </section>
-
       {/* SHOP BY MOOD */}
       <section className="izu-mood">
         <div className="izu-section-head">
@@ -231,6 +211,47 @@ function HomePage() {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* STORY SNAPSHOT */}
+      <section className="izu-story-snap">
+        <div className="izu-story-snap-img">
+          <img src={storyFamily} alt="IZU heritage — over two decades of craft" loading="lazy" />
+        </div>
+        <div className="izu-story-snap-text">
+          <span className="izu-eyebrow">Our Story</span>
+          <h2 className="izu-h2">
+            Some things you only <em>build slowly.</em>
+          </h2>
+          <p className="izu-story-snap-lead">
+            From the Aegean light of Paros to the hand-looms of India, IZU has
+            spent over two decades refining the discipline of craft.
+          </p>
+          <Link to="/our-story" className="btn-outline izu-btn-ghost-dark">
+            Discover the 22-Year Journey →
+          </Link>
+        </div>
+      </section>
+
+      {/* IZU EDIT */}
+      <section className="izu-section izu-edit">
+        <div className="izu-section-head">
+          <span className="izu-eyebrow">The IZU Edit</span>
+          <h2 className="izu-h2">
+            This year's <em>best pieces.</em>
+          </h2>
+          <p className="izu-section-sub">
+            Curated by our atelier — eight silhouettes our clients keep returning for.
+          </p>
+        </div>
+
+        <ProductGrid products={izuEdit} />
+
+        <div className="izu-section-foot">
+          <Link to="/shop" search={{ category: undefined }} className="btn-outline izu-btn-ghost">
+            View The Edit
+          </Link>
         </div>
       </section>
 
@@ -507,5 +528,22 @@ const pageStyles = `
   .izu-mood-feature-text{left:1.4rem;right:1.4rem;max-width:none}
   .izu-rail-card{flex:0 0 180px}
   .izu-journal{padding:4rem 5%}
+}
+
+/* STORY SNAPSHOT */
+.izu-story-snap{display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--cream);align-items:stretch}
+.izu-story-snap-img{position:relative;overflow:hidden;min-height:520px}
+.izu-story-snap-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.izu-story-snap:hover .izu-story-snap-img img{transform:scale(1.04)}
+.izu-story-snap-text{display:flex;flex-direction:column;justify-content:center;padding:5rem 5rem 5rem 4.5rem;max-width:560px}
+.izu-story-snap-text .izu-eyebrow{margin-bottom:1.2rem}
+.izu-story-snap-text .izu-h2{margin:0 0 1.4rem;font-size:clamp(1.9rem,3.4vw,2.8rem)}
+.izu-story-snap-lead{font-family:var(--serif);font-style:italic;font-weight:300;font-size:1.05rem;line-height:1.75;color:var(--mid);margin:0 0 2rem}
+.izu-btn-ghost-dark{align-self:flex-start;color:var(--dk);border-color:var(--dk)}
+.izu-btn-ghost-dark:hover{background:var(--dk);color:var(--white)}
+@media(max-width:860px){
+  .izu-story-snap{grid-template-columns:1fr}
+  .izu-story-snap-img{min-height:380px}
+  .izu-story-snap-text{padding:3rem 1.4rem;max-width:none}
 }
 `;
