@@ -5,6 +5,7 @@ import heroParos from "@/assets/hero-paros.jpg";
 import featureKimono from "@/assets/feature-kimono.jpg";
 import featureDress from "@/assets/feature-dress.jpg";
 import featureAccessories from "@/assets/feature-accessories.jpg";
+import storyFamily from "@/assets/story-family-artisans.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
