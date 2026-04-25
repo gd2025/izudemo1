@@ -151,27 +151,6 @@ function HomePage() {
 
 
 
-      {/* IZU EDIT */}
-      <section className="izu-section izu-edit">
-        <div className="izu-section-head">
-          <span className="izu-eyebrow">The IZU Edit</span>
-          <h2 className="izu-h2">
-            This year's <em>best pieces.</em>
-          </h2>
-          <p className="izu-section-sub">
-            Curated by our atelier — eight silhouettes our clients keep returning for.
-          </p>
-        </div>
-
-        <ProductGrid products={izuEdit} />
-
-        <div className="izu-section-foot">
-          <Link to="/shop" search={{ category: undefined }} className="btn-outline izu-btn-ghost">
-            View The Edit
-          </Link>
-        </div>
-      </section>
-
       {/* SHOP BY MOOD */}
       <section className="izu-mood">
         <div className="izu-section-head">
@@ -232,6 +211,47 @@ function HomePage() {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* STORY SNAPSHOT */}
+      <section className="izu-story-snap">
+        <div className="izu-story-snap-img">
+          <img src={storyFamily} alt="IZU heritage — over two decades of craft" loading="lazy" />
+        </div>
+        <div className="izu-story-snap-text">
+          <span className="izu-eyebrow">Our Story</span>
+          <h2 className="izu-h2">
+            Some things you only <em>build slowly.</em>
+          </h2>
+          <p className="izu-story-snap-lead">
+            From the Aegean light of Paros to the hand-looms of India, IZU has
+            spent over two decades refining the discipline of craft.
+          </p>
+          <Link to="/our-story" className="btn-outline izu-btn-ghost-dark">
+            Discover the 22-Year Journey →
+          </Link>
+        </div>
+      </section>
+
+      {/* IZU EDIT */}
+      <section className="izu-section izu-edit">
+        <div className="izu-section-head">
+          <span className="izu-eyebrow">The IZU Edit</span>
+          <h2 className="izu-h2">
+            This year's <em>best pieces.</em>
+          </h2>
+          <p className="izu-section-sub">
+            Curated by our atelier — eight silhouettes our clients keep returning for.
+          </p>
+        </div>
+
+        <ProductGrid products={izuEdit} />
+
+        <div className="izu-section-foot">
+          <Link to="/shop" search={{ category: undefined }} className="btn-outline izu-btn-ghost">
+            View The Edit
+          </Link>
         </div>
       </section>
 
