@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { IzuLayout, MOODS, MOOD_IMAGES, formatPrice } from "@/components/IzuLayout";
+import { supabase } from "@/integrations/supabase/client";
+import { resolveProductImage } from "@/lib/product-images";
 import heroParos from "@/assets/hero-paros.jpg";
 import featureKimono from "@/assets/feature-kimono.jpg";
 import featureDress from "@/assets/feature-dress.jpg";
