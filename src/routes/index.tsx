@@ -41,44 +41,44 @@ type Product = {
 const IMG_POOL = [heroParos, featureKimono, featureDress, featureAccessories];
 const img = (i: number) => IMG_POOL[i % IMG_POOL.length];
 
-const izuEdit: Product[] = [
-  { slug: "ios-linen-dress", name: "Ios Linen Dress", price: 24800, image: img(0), tag: "New" },
+// Fallback static lists used until the live products load. Slugs here intentionally
+// match real rows in the products table so links work even before fetch completes.
+const izuEditFallback: Product[] = [
+  { slug: "ios-rayon-dress", name: "Ios Rayon Wrap Dress", price: 24800, image: img(0), tag: "New" },
   { slug: "naoussa-silk-kimono", name: "Naoussa Silk Kimono", price: 38900, image: img(1), tag: "Limited" },
-  { slug: "kyma-sunset-dress", name: "Kyma Sunset Dress", price: 31500, image: img(2), tag: "Editor's Pick" },
-  { slug: "paros-jewelry-set", name: "Paros Jewelry Set", price: 14200, image: img(3) },
+  { slug: "paros-silk-slip-dress", name: "Paros Silk Slip Dress", price: 28800, image: img(2), tag: "Editor's Pick" },
+  { slug: "antiparos-jewelry-set", name: "Antiparos Jewelry Set", price: 14200, image: img(3) },
   { slug: "antiparos-cotton-set", name: "Antiparos Cotton Set", price: 22600, image: img(0) },
-  { slug: "marpissa-shirt", name: "Marpissa Linen Shirt", price: 16800, image: img(1) },
+  { slug: "marpissa-silk-top", name: "Marpissa Silk Top", price: 16800, image: img(1) },
   { slug: "lefkes-wrap-skirt", name: "Lefkes Wrap Skirt", price: 19500, image: img(2) },
-  { slug: "aliki-sandal", name: "Aliki Leather Sandal", price: 18900, image: img(3) },
+  { slug: "paros-leather-sandal", name: "Paros Leather Sandal", price: 18900, image: img(3) },
 ];
 
-const bestSellers: Product[] = [
-  { slug: "ios-linen-dress", name: "Ios Linen Dress", price: 24800, image: img(0), tag: "#1 Bestseller" },
-  { slug: "kyma-sunset-dress", name: "Kyma Sunset Dress", price: 31500, image: img(2), tag: "Loved" },
-  { slug: "marpissa-shirt", name: "Marpissa Linen Shirt", price: 16800, image: img(1), tag: "Restocked" },
-  { slug: "naoussa-silk-kimono", name: "Naoussa Silk Kimono", price: 38900, image: img(1), tag: "Almost Gone" },
-  { slug: "aliki-sandal", name: "Aliki Leather Sandal", price: 18900, image: img(3), tag: "Loved" },
-  { slug: "paros-jewelry-set", name: "Paros Jewelry Set", price: 14200, image: img(3) },
-  { slug: "lefkes-wrap-skirt", name: "Lefkes Wrap Skirt", price: 19500, image: img(2), tag: "Trending" },
-  { slug: "antiparos-cotton-set", name: "Antiparos Cotton Set", price: 22600, image: img(0) },
-];
-
-const moodProducts = (mood: string): Product[] => {
-  const moodImg = MOOD_IMAGES[mood];
-  return [
-    { slug: `${mood}-piece-1`, name: "Aegean Slip Dress", price: 24800, image: moodImg },
-    { slug: `${mood}-piece-2`, name: "Sand Linen Set", price: 21900, image: img(0) },
-    { slug: `${mood}-piece-3`, name: "Salt Cotton Shirt", price: 14800, image: img(1) },
-    { slug: `${mood}-piece-4`, name: "Coastline Kimono", price: 32900, image: img(2) },
-    { slug: `${mood}-piece-5`, name: "Driftwood Sandal", price: 17900, image: img(3) },
-    { slug: `${mood}-piece-6`, name: "Naxos Wrap Skirt", price: 18900, image: moodImg },
-  ];
+type DbProduct = {
+  id: string;
+  slug: string;
+  name: string;
+  price_cents: number;
+  image_url: string | null;
+  category: string | null;
+  moods: string[] | null;
 };
+
+function dbToCard(p: DbProduct, tag?: string): Product {
+  return {
+    slug: p.slug,
+    name: p.name,
+    price: p.price_cents,
+    image: resolveProductImage(p.image_url, p.category),
+    tag,
+  };
+}
 
 function HomePage() {
   const [scrollY, setScrollY] = useState(0);
   const [mounted, setMounted] = useState(false);
   const [activeMood, setActiveMood] = useState(MOODS[0].slug);
+  const [allProducts, setAllProducts] = useState<DbProduct[]>([]);
 
   useEffect(() => {
     setMounted(true);
@@ -87,7 +87,35 @@ function HomePage() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const currentMoodProducts = moodProducts(activeMood);
+  useEffect(() => {
+    supabase
+      .from("products")
+      .select("id,slug,name,price_cents,image_url,category,moods")
+      .order("created_at")
+      .then(({ data }) => setAllProducts((data ?? []) as DbProduct[]));
+  }, []);
+
+  const izuEdit = useMemo<Product[]>(
+    () =>
+      allProducts.length
+        ? allProducts.slice(0, 8).map((p, i) =>
+            dbToCard(p, i === 0 ? "New" : i === 1 ? "Limited" : i === 2 ? "Editor's Pick" : undefined),
+          )
+        : izuEditFallback,
+    [allProducts],
+  );
+
+  const bestSellers = useMemo<Product[]>(() => {
+    if (!allProducts.length) return izuEditFallback;
+    const tags = ["#1 Bestseller", "Loved", "Restocked", "Almost Gone", "Loved", undefined, "Trending", undefined];
+    return allProducts.slice(-8).map((p, i) => dbToCard(p, tags[i]));
+  }, [allProducts]);
+
+  const currentMoodProducts = useMemo<Product[]>(() => {
+    const matches = allProducts.filter((p) => (p.moods ?? []).includes(activeMood));
+    if (matches.length === 0) return izuEdit.slice(0, 6);
+    return matches.slice(0, 6).map((p) => dbToCard(p));
+  }, [allProducts, activeMood, izuEdit]);
 
   return (
     <IzuLayout cartCount={0}>
