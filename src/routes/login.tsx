@@ -5,9 +5,12 @@ import { IzuLayout } from "@/components/IzuLayout";
 
 export const Route = createFileRoute("/login")({
   head: () => ({ meta: [{ title: "Sign In — IZU Paros" }] }),
-  validateSearch: (s: Record<string, unknown>) => ({
-    redirect: typeof s.redirect === "string" ? s.redirect : "/",
-  }),
+  validateSearch: (s: Record<string, unknown>) => {
+    const raw = typeof s.redirect === "string" ? s.redirect : "/";
+    // Only same-origin relative paths allowed — blocks open-redirect phishing.
+    const safe = raw.startsWith("/") && !raw.startsWith("//") ? raw : "/";
+    return { redirect: safe };
+  },
   component: LoginPage,
 });
 

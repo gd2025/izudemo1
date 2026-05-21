@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.enforce_order_total() FROM PUBLIC, anon, authenticated;
