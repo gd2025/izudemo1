@@ -2,6 +2,13 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { IzuLayout, formatPrice } from "@/components/IzuLayout";
+import {
+  isCodeValid,
+  readFittingDiscount,
+  clearFittingDiscount,
+  FITTING_DISCOUNT_RATE,
+  type FittingDiscount,
+} from "@/lib/fitting-room-discount";
 
 export const Route = createFileRoute("/cart")({
   head: () => ({ meta: [{ title: "Cart — IZU Paros" }] }),
