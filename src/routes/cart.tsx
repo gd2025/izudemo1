@@ -100,15 +100,25 @@ function CartPage() {
     const items = rows
       .filter((r) => r.product)
       .map((r) => ({ product_id: r.product!.id, name: r.product!.name, price_cents: r.product!.price_cents, quantity: r.quantity }));
-    const total = items.reduce((s, i) => s + i.price_cents * i.quantity, 0);
-    await supabase.from("orders").insert({ user_id: u.user.id, total_cents: total, items, status: "pending" });
+    const subtotal = items.reduce((s, i) => s + i.price_cents * i.quantity, 0);
+    const discountCents = appliedDiscount ? Math.round(subtotal * FITTING_DISCOUNT_RATE) : 0;
+    const finalTotal = subtotal - discountCents;
+    await supabase.from("orders").insert({ user_id: u.user.id, total_cents: finalTotal, items, status: "pending" });
     await supabase.from("cart_items").delete().eq("user_id", u.user.id);
+    if (appliedDiscount) clearFittingDiscount();
     setPlacing(false);
     alert("Order placed! (placeholder checkout)");
     load();
   }
 
-  const total = rows.reduce((s, r) => s + (r.product?.price_cents ?? 0) * r.quantity, 0);
+  const subtotal = rows.reduce((s, r) => s + (r.product?.price_cents ?? 0) * r.quantity, 0);
+  const discountCents = appliedDiscount ? Math.round(subtotal * FITTING_DISCOUNT_RATE) : 0;
+  const total = subtotal - discountCents;
+  const remainingMs = appliedDiscount ? Math.max(0, appliedDiscount.expiresAt - now) : 0;
+  const remainingLabel = (() => {
+    const t = Math.floor(remainingMs / 1000);
+    return `${Math.floor(t / 60)}:${(t % 60).toString().padStart(2, "0")}`;
+  })();
 
   return (
     <IzuLayout cartCount={rows.reduce((s, r) => s + r.quantity, 0)}>
