@@ -27,6 +27,38 @@ function CartPage() {
   const [loading, setLoading] = useState(true);
   const [authed, setAuthed] = useState(false);
   const [placing, setPlacing] = useState(false);
+  const [codeInput, setCodeInput] = useState("");
+  const [appliedDiscount, setAppliedDiscount] = useState<FittingDiscount | null>(null);
+  const [codeMsg, setCodeMsg] = useState<string | null>(null);
+  const [now, setNow] = useState(Date.now());
+
+  useEffect(() => {
+    // Auto-apply if an active code lives in localStorage
+    const active = readFittingDiscount();
+    if (active) setAppliedDiscount(active);
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  // Drop expired discount
+  useEffect(() => {
+    if (appliedDiscount && appliedDiscount.expiresAt <= now) {
+      setAppliedDiscount(null);
+      clearFittingDiscount();
+      setCodeMsg("Your fitting room offer just expired.");
+    }
+  }, [appliedDiscount, now]);
+
+  const applyCode = () => {
+    setCodeMsg(null);
+    const valid = isCodeValid(codeInput);
+    if (!valid) {
+      setCodeMsg("That code isn't valid or has expired.");
+      return;
+    }
+    setAppliedDiscount(valid);
+    setCodeMsg("10% off applied to your order.");
+  };
 
   const load = useCallback(async () => {
     setLoading(true);
