@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { IzuLayout, formatPrice } from "@/components/IzuLayout";
 import { resolveProductImage } from "@/lib/product-images";
+import { VirtualFittingRoom } from "@/components/VirtualFittingRoom";
 
 export const Route = createFileRoute("/product/$slug")({
   component: ProductPage,
