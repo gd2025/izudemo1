@@ -218,10 +218,8 @@ function CartPage() {
 const qtyBtn: React.CSSProperties = {
   width: 28, height: 28, border: ".5px solid var(--clay)", background: "transparent", color: "var(--dk)", cursor: "pointer", fontSize: "1rem", lineHeight: 1,
 };
-      </section>
-    </IzuLayout>
-  );
-}
+
+
 
 const qtyBtn: React.CSSProperties = {
   width: 28, height: 28, border: ".5px solid var(--clay)", background: "transparent", color: "var(--dk)", cursor: "pointer", fontSize: "1rem", lineHeight: 1,
