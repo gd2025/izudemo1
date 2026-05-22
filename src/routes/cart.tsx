@@ -160,14 +160,64 @@ function CartPage() {
                 </div>
               </div>
             ))}
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "2.5rem" }}>
-              <div style={{ fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.4rem" }}>
-                Total <span style={{ color: "var(--brand)", marginLeft: "1rem" }}>{formatPrice(total)}</span>
+            <div style={{ marginTop: "2rem", padding: "1.4rem", background: "var(--cream)", border: ".5px solid var(--parch)" }}>
+              <div style={{ fontSize: ".58rem", letterSpacing: ".24em", textTransform: "uppercase", color: "var(--brand)", marginBottom: ".7rem", fontWeight: 500 }}>
+                Have a code?
               </div>
-              <button className="btn-brand" onClick={checkout} disabled={placing}>{placing ? "Placing…" : "Checkout"}</button>
+              {appliedDiscount ? (
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: ".6rem" }}>
+                  <div style={{ fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1rem", color: "var(--dk)" }}>
+                    <strong style={{ fontFamily: "var(--sans)", fontStyle: "normal", letterSpacing: ".14em", fontSize: ".78rem", fontWeight: 400 }}>{appliedDiscount.code}</strong>
+                    {" — 10% off your order"}
+                  </div>
+                  <div style={{ fontSize: ".62rem", letterSpacing: ".18em", textTransform: "uppercase", color: "var(--brand)" }}>
+                    Expires in {remainingLabel}
+                  </div>
+                </div>
+              ) : (
+                <div style={{ display: "flex", gap: ".5rem", flexWrap: "wrap" }}>
+                  <input
+                    value={codeInput}
+                    onChange={(e) => setCodeInput(e.target.value)}
+                    placeholder="IZU-MIRROR-XXXX"
+                    style={{ flex: 1, minWidth: 180, padding: ".75rem .9rem", border: ".5px solid var(--clay)", background: "var(--white)", fontFamily: "var(--sans)", letterSpacing: ".1em", color: "var(--dk)" }}
+                  />
+                  <button onClick={applyCode} className="btn-outline">Apply</button>
+                </div>
+              )}
+              {codeMsg && (
+                <div style={{ marginTop: ".7rem", fontSize: ".72rem", color: appliedDiscount ? "var(--brand)" : "var(--mid)", fontStyle: "italic", fontFamily: "var(--serif)" }}>
+                  {codeMsg}
+                </div>
+              )}
+            </div>
+
+            <div style={{ marginTop: "2rem", borderTop: ".5px solid var(--parch)", paddingTop: "1.4rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", padding: ".4rem 0", color: "var(--mid)", fontSize: ".88rem" }}>
+                <span>Subtotal</span><span>{formatPrice(subtotal)}</span>
+              </div>
+              {appliedDiscount && (
+                <div style={{ display: "flex", justifyContent: "space-between", padding: ".4rem 0", color: "var(--brand)", fontSize: ".88rem" }}>
+                  <span>Fitting room reward (−10%)</span><span>−{formatPrice(discountCents)}</span>
+                </div>
+              )}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "1rem" }}>
+                <div style={{ fontFamily: "var(--serif)", fontStyle: "italic", fontSize: "1.4rem" }}>
+                  Total <span style={{ color: "var(--brand)", marginLeft: "1rem" }}>{formatPrice(total)}</span>
+                </div>
+                <button className="btn-brand" onClick={checkout} disabled={placing}>{placing ? "Placing…" : "Checkout"}</button>
+              </div>
             </div>
           </div>
         )}
+      </section>
+    </IzuLayout>
+  );
+}
+
+const qtyBtn: React.CSSProperties = {
+  width: 28, height: 28, border: ".5px solid var(--clay)", background: "transparent", color: "var(--dk)", cursor: "pointer", fontSize: "1rem", lineHeight: 1,
+};
       </section>
     </IzuLayout>
   );
