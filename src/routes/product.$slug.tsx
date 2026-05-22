@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { IzuLayout, formatPrice } from "@/components/IzuLayout";
 import { resolveProductImage } from "@/lib/product-images";
+import { VirtualFittingRoom } from "@/components/VirtualFittingRoom";
 
 export const Route = createFileRoute("/product/$slug")({
   component: ProductPage,
@@ -135,6 +136,15 @@ function ProductPage() {
                 <div className="pdp-block-title">The Fit · On the Model</div>
                 <p className="pdp-fit">"Model is wearing Size S. Height: 175cm · Weight: 58kg. Fits true to size with a relaxed Mediterranean drape."</p>
               </div>
+
+              <VirtualFittingRoom
+                product={{
+                  id: product.id,
+                  name: product.name,
+                  category: product.category,
+                  image_url: resolveProductImage(product.image_url, product.category),
+                }}
+              />
 
               <div className="pdp-block">
                 <div className="pdp-block-title" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
